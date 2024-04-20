@@ -2,12 +2,13 @@ package com.example.domain.usecase
 
 import com.example.domain.DomainModel
 import com.example.domain.repository.IExampleRepository
+import javax.inject.Inject
 
 interface IExampleUseCase {
     suspend fun getMultiplyModels(): List<DomainModel>
 }
 
-internal class ExampleUseCaseImpl(
+internal class ExampleUseCaseImpl @Inject constructor(
     private val exampleRepository: IExampleRepository
 ) : IExampleUseCase {
     override suspend fun getMultiplyModels(): List<DomainModel> {

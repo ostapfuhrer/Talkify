@@ -4,8 +4,9 @@ import com.example.data.database.FakeDatabase
 import com.example.data.mapper.DataDomainModelMapper
 import com.example.domain.DomainModel
 import com.example.domain.repository.IExampleRepository
+import javax.inject.Inject
 
-internal class ExampleRepository(
+internal class ExampleRepository @Inject constructor(
     private val dataDomainModelMapper: DataDomainModelMapper,
     private val fakeDatabase: FakeDatabase,
 ) : IExampleRepository {
