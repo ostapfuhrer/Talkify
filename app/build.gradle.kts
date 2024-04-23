@@ -92,6 +92,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 }
 kapt {
     correctErrorTypes = true
