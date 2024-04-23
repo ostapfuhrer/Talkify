@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -31,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -95,14 +97,8 @@ val items = listOf<Item>(
 
 val colors = listOf<Color>(
     Color.White,
-    Color.White,
-    Color.White,
-    Color.White,
-    Color.White,
-    Color.White,
-    Color.White,
 
-    Color(0xDCFFE600)
+    Color(0xB0F7E436)
 )
 
 
@@ -123,11 +119,11 @@ fun MainScreen(modifier: Modifier = Modifier, viewModel: MainScreenViewModel = h
 
 
         Scaffold(
-            topBar = { if(state.edit){TopAppBar()} }
+            topBar = { if(state.edit){TopAppBar()} }, bottomBar = {BottomBar(onEdit = {viewModel.onEvent(MainScreenStates.Edit)})}
 
             , modifier = modifier
                 .fillMaxSize()
-                .background(brush = GradientBackgrougBrash(colors = colors))
+
         ) { paddingValues ->
             mainHome(paddingValues, onEdit = {viewModel.onEvent(MainScreenStates.Edit)})
         }
@@ -142,7 +138,7 @@ fun mainHome(paddingValues: PaddingValues,onEdit:()->Unit, modifier: Modifier = 
         .padding(paddingValues)) {
         if(items.isEmpty()){
             Column(modifier= modifier
-                .fillMaxHeight(0.9f)
+                .fillMaxHeight()
                 .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center){
                 Image(painter = painterResource(id = R.drawable.bucket), contentDescription =null, modifier= Modifier.size(80.dp) )
@@ -150,24 +146,18 @@ fun mainHome(paddingValues: PaddingValues,onEdit:()->Unit, modifier: Modifier = 
 
         }
         else {
-            LazyVerticalGrid( modifier= modifier.fillMaxHeight(0.9f),
+            LazyVerticalGrid( modifier= modifier.fillMaxHeight(),
                 columns = GridCells.Adaptive(minSize = 128.dp),
             ) {
                 items(items.size) { item ->
-//                Image(
-//                    painterResource(items[item].Imageid), contentDescription = null,
-//                    modifier = modifier
-//                        .padding(vertical = 10.dp)
-//                        .size(70.dp)
-//                )
+
                     Item(items[item])
 
             }
 
             }
         }
-        Spacer(modifier = modifier.weight(1f))
-        BottomBar(onEdit=onEdit)
+
     }
 
 
@@ -177,7 +167,8 @@ fun mainHome(paddingValues: PaddingValues,onEdit:()->Unit, modifier: Modifier = 
 @Composable
 fun Item(item: Item, modifier: Modifier=Modifier){
     Column(     modifier = modifier
-        .padding(vertical = 10.dp), horizontalAlignment =  Alignment.CenterHorizontally) {
+        .padding(vertical = 10.dp),
+        horizontalAlignment =  Alignment.CenterHorizontally) {
 
             Image(
                 painterResource(item.Imageid), contentDescription = null,
@@ -237,7 +228,8 @@ fun TestScreen(){
 @Composable
 fun BottomBar(modifier: Modifier = Modifier,onEdit:()->Unit,) {
 
-    Row(modifier = modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceEvenly) {
+    Row(modifier = modifier.fillMaxWidth()
+        .background(brush = GradientBackgrougBrash(colors = colors)),horizontalArrangement = Arrangement.SpaceEvenly) {
         RoundIcon(R.drawable.home,{})
         RoundIcon(R.drawable.edit,{onEdit()})
         RoundIcon(R.drawable.settings,{})
@@ -254,17 +246,21 @@ fun BottomBar(modifier: Modifier = Modifier,onEdit:()->Unit,) {
 
 @Composable
 fun RoundIcon(image:Int,onClick:()->Unit,modifier: Modifier = Modifier){
-    Box(modifier= modifier
-        .size(80.dp)
-
+    Box(modifier= modifier.padding(10.dp)
+        .size(90.dp)
+        .shadow(
+            elevation = 10.dp,
+            spotColor = Color.LightGray,
+            shape = RoundedCornerShape(50)
+        )
         .clip(RoundedCornerShape(50))
-        .background(Color(0xFFFFE600)), contentAlignment = Alignment.Center){
+        .background(Color.White), contentAlignment = Alignment.Center){
         Image(painterResource(id = image), contentDescription = null,
             modifier
-                .size(60.dp)
+                .size(70.dp)
                 .clickable { onClick() }
                 .clip(RoundedCornerShape(50))
-                .background(Color(0xFFFFE600)),)
+                .background(Color.White),)
     }
 
 
