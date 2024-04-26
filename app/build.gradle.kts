@@ -85,6 +85,7 @@ dependencies {
     // Hilt di
     implementation("com.google.dagger:hilt-android:2.46")
     kapt("com.google.dagger:hilt-android-compiler:2.46")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     // Room db
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
@@ -92,7 +93,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
 }
 kapt {
     correctErrorTypes = true

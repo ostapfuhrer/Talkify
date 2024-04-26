@@ -2,46 +2,4 @@ package com.example.talkify.utils
 
 import com.example.talkify.R
 
-
-val items = listOf<Item>(
-
-    Item("1", R.drawable.img_1),
-    Item("1", R.drawable.img_2),
-    Item("1", R.drawable.img_3),
-    Item("1", R.drawable.img_4),
-    Item("1", R.drawable.img_5),
-    Item("1", R.drawable.img_6),
-    Item("1", R.drawable.img_8),
-    Item("1", R.drawable.img_3),
-    Item("1", R.drawable.img_4),
-    Item("1", R.drawable.img_5),
-    Item("1", R.drawable.img_7),
-    Item("1", R.drawable.img_1),
-    Item("1", R.drawable.img_2),
-    Item("1", R.drawable.img_3),
-    Item("1", R.drawable.img_8),
-    Item("1", R.drawable.img_5),
-    Item("1", R.drawable.img_6),
-    Item("1", R.drawable.img_2),
-    Item("1", R.drawable.img_2),
-    Item("1", R.drawable.img_3),
-    Item("1", R.drawable.img_4),
-    Item("1", R.drawable.img_7),
-    Item("1", R.drawable.img_6),
-    Item("1", R.drawable.img_2),
-    Item("1", R.drawable.img_7),
-    Item("1", R.drawable.img_4),
-    Item("1", R.drawable.img_5),
-    Item("1", R.drawable.img_6),
-    Item("1", R.drawable.img_1),
-    Item("1", R.drawable.img_7),
-    Item("1", R.drawable.img_3),
-    Item("1", R.drawable.img_4),
-    Item("1", R.drawable.img_5),
-    Item("1", R.drawable.img_8),
-    Item("1", R.drawable.img_2),
-    Item("1", R.drawable.img_3),
-    Item("1", R.drawable.img_4),
-    Item("1", R.drawable.img_5),
-    Item("1", R.drawable.img_6),
-)
+val items = List(30) { Item("1", R.drawable::class.java.getDeclaredField("img_${it % 8 + 1}").getInt(null)) }

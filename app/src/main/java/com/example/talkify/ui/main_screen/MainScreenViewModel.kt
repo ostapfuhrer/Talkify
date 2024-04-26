@@ -12,11 +12,11 @@ import javax.inject.Inject
 @HiltViewModel
 class MainScreenViewModel@Inject constructor():ViewModel() {
 
-   private var _UiState: MainScreenState by mutableStateOf(MainScreenState())
+   private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
         private set
 
-    val UiState: MainScreenState
-        get() = _UiState
+    val uiState: MainScreenState
+        get() = _uiState
     fun onEvent(state :MainScreenStates){
         when(state){
             MainScreenStates.Edit->editScreen()
@@ -28,8 +28,8 @@ class MainScreenViewModel@Inject constructor():ViewModel() {
     }
 
     private fun editScreen() {
-       val current = _UiState.edit
-        val updated = _UiState.copy(!current)
-        _UiState= updated
+       val current = _uiState.edit
+        val updated = _uiState.copy(!current)
+        _uiState= updated
     }
 }
