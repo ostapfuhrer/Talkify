@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-crashlytics-buildtools:2.9.9")
     val roomVersion = "2.6.1"
     api(project(":domain"))
     implementation("androidx.core:core-ktx:1.12.0")
@@ -60,8 +61,12 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$roomVersion")
+    kapt( "androidx.room:room-compiler:$roomVersion")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+
+    //Gson
+    implementation ("com.google.code.gson:gson:2.10")
 }
 kapt {
     correctErrorTypes = true
