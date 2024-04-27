@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.domain.repository.IExampleRepository
 import com.example.domain.usecase.IExampleUseCase
-import com.example.talkify.ui.main_screen.MainScreen
+import com.example.talkify.ui.main_screen.screen.MainScreen
 import com.example.talkify.ui.theme.TalkifyTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.talkify.ui.main_screen
+package com.example.talkify.ui.main_screen.screen
 
 import androidx.compose.foundation.Image
 
@@ -32,6 +32,7 @@ import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.TopAppBar
 import com.example.talkify.ui.main_screen.composable.Item
 import com.example.talkify.ui.main_screen.states.MainScreenStates
+import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 import com.example.talkify.ui.theme.dimens
 import com.example.talkify.utils.items
 
