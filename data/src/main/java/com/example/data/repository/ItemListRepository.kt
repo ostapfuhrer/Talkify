@@ -10,5 +10,5 @@ interface ItemListRepository {
     suspend fun UpdateList(itemList: ItemList)
     suspend fun Deleteist(itemList: ItemList)
     fun getAllLists(): Flow<List<ItemList>>
-    fun getBookByID(id:Int): ItemList
+    fun getListByID(id:String): ItemList
 }

@@ -34,6 +34,9 @@ import com.example.talkify.ui.main_screen.composable.Item
 import com.example.talkify.ui.main_screen.states.MainScreenStates
 import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 import com.example.talkify.ui.theme.dimens
+import com.example.talkify.utils.Item
+import com.example.talkify.utils.fruits
+
 import com.example.talkify.utils.items
 
 
@@ -55,12 +58,12 @@ fun MainScreen(
             .fillMaxSize()
 
     ) { paddingValues ->
-        MainHome(paddingValues)
+        MainHome(paddingValues, state.list )
     }
 }
 
 @Composable
-fun MainHome(paddingValues: PaddingValues, modifier: Modifier = Modifier) {
+fun MainHome(paddingValues: PaddingValues, list:List<Item>, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -85,8 +88,8 @@ fun MainHome(paddingValues: PaddingValues, modifier: Modifier = Modifier) {
                 modifier = modifier.fillMaxHeight(),
                 columns = GridCells.Adaptive(minSize = dimens.gridSellSize),
             ) {
-                items(items.size) { item ->
-                    Item(items[item])
+                items(list.size) { item ->
+                    Item(list[item])
                 }
             }
         }

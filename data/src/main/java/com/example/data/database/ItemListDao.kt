@@ -27,5 +27,5 @@ interface ItemListDao {
     fun getAllLists(): Flow<List<ItemList>>
 
     @Query("Select * from AppLists where id =:id")
-    fun getBookByID(id:Int): ItemList
+    fun getListByID(id:String): ItemList
 }

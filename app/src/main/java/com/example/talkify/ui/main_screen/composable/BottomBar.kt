@@ -22,9 +22,9 @@ val colors = listOf<Color>(
 fun BottomBar(modifier: Modifier = Modifier, onEdit:()->Unit,) {
     Row(modifier = modifier.fillMaxWidth()
         .background(brush = gradientBackgroundBrash(colors = colors)),horizontalArrangement = Arrangement.SpaceEvenly) {
-        RoundIcon(R.drawable.home,{})
-        RoundIcon(R.drawable.edit,{onEdit()})
-        RoundIcon(R.drawable.settings,{})
+        RoundIcon(R.drawable.home1,{})
+        RoundIcon(R.drawable.edit1,{onEdit()})
+        RoundIcon(R.drawable.setting1,{})
     }
 }
 
