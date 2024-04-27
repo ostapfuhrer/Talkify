@@ -15,26 +15,29 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.talkify.ui.theme.dimens
 
 @Composable
-fun RoundIcon(image:Int,onClick:()->Unit,modifier: Modifier = Modifier){
-    Box(modifier= modifier.padding(10.dp)
-        .size(90.dp)
-        .shadow(
-            elevation = 10.dp,
-            spotColor = Color.LightGray,
-            shape = RoundedCornerShape(50)
-        )
-        .clip(RoundedCornerShape(50))
-        .background(Color.White), contentAlignment = Alignment.Center){
+fun RoundIcon(image: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .padding(dimens.itemPadding1)
+            .size(dimens.boxSize)
+            .shadow(
+                elevation = 10.dp,
+                spotColor = Color.LightGray,
+                shape = RoundedCornerShape(50)
+            )
+            .clip(RoundedCornerShape(50))
+            .background(Color.White), contentAlignment = Alignment.Center
+    ) {
         Image(
             painterResource(id = image), contentDescription = null,
             modifier
-                .size(70.dp)
+                .size(dimens.itemSize)
                 .clickable { onClick() }
                 .clip(RoundedCornerShape(50))
-                .background(Color.White),)
+                .background(Color.White),
+        )
     }
-
-
 }

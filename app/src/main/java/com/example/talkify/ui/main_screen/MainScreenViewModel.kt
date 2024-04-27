@@ -10,26 +10,26 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainScreenViewModel@Inject constructor():ViewModel() {
+class MainScreenViewModel @Inject constructor() : ViewModel() {
 
-   private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
+    private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
         private set
 
     val uiState: MainScreenState
         get() = _uiState
-    fun onEvent(state :MainScreenStates){
-        when(state){
-            MainScreenStates.Edit->editScreen()
+
+    fun onEvent(state: MainScreenStates) {
+        when (state) {
+            MainScreenStates.Edit -> editScreen()
             MainScreenStates.ChangeList -> TODO()
             MainScreenStates.GoHome -> TODO()
             MainScreenStates.OpenSetting -> TODO()
         }
-
     }
 
     private fun editScreen() {
-       val current = _uiState.edit
+        val current = _uiState.edit
         val updated = _uiState.copy(!current)
-        _uiState= updated
+        _uiState = updated
     }
 }

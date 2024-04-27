@@ -15,31 +15,24 @@ import com.example.talkify.R
 
 val colors = listOf<Color>(
     Color.White,
-
     Color(0xB0F7E436)
 )
 
 @Composable
 fun BottomBar(modifier: Modifier = Modifier, onEdit:()->Unit,) {
-
     Row(modifier = modifier.fillMaxWidth()
         .background(brush = gradientBackgroundBrash(colors = colors)),horizontalArrangement = Arrangement.SpaceEvenly) {
         RoundIcon(R.drawable.home,{})
         RoundIcon(R.drawable.edit,{onEdit()})
         RoundIcon(R.drawable.settings,{})
-
     }
-
-
 }
 
 @Composable
 fun gradientBackgroundBrash(colors:List<Color>): Brush {
-
     return Brush.linearGradient(
         colors= colors,
         start = Offset.Zero,
         end = Offset(0F, Float.POSITIVE_INFINITY)
     )
-
 }

@@ -26,13 +26,13 @@ import androidx.compose.ui.Modifier
 
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.talkify.R
 import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.TopAppBar
 import com.example.talkify.ui.main_screen.composable.Item
 import com.example.talkify.ui.main_screen.states.MainScreenStates
+import com.example.talkify.ui.theme.dimens
 import com.example.talkify.utils.items
 
 
@@ -42,11 +42,7 @@ fun MainScreen(
     modifier: Modifier = Modifier,
     viewModel: MainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 ) {
-
-
     val state = viewModel.uiState
-
-
     Scaffold(
         topBar = {
             if (state.edit) {
@@ -60,8 +56,6 @@ fun MainScreen(
     ) { paddingValues ->
         MainHome(paddingValues)
     }
-
-
 }
 
 @Composable
@@ -81,27 +75,21 @@ fun MainHome(paddingValues: PaddingValues, modifier: Modifier = Modifier) {
                 Image(
                     painter = painterResource(id = R.drawable.bucket),
                     contentDescription = null,
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.size(dimens.boxSize)
                 )
             }
 
         } else {
             LazyVerticalGrid(
                 modifier = modifier.fillMaxHeight(),
-                columns = GridCells.Adaptive(minSize = 128.dp),
+                columns = GridCells.Adaptive(minSize = dimens.gridSellSize),
             ) {
                 items(items.size) { item ->
-
                     Item(items[item])
-
                 }
-
             }
         }
-
     }
-
-
 }
 
 

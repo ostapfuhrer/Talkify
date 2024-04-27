@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
+import com.example.talkify.ui.theme.dimens
 
 import com.example.talkify.utils.categories
 
@@ -20,9 +20,9 @@ import com.example.talkify.utils.categories
 fun TopAppBar(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .padding(15.dp),
+            .padding(dimens.itemPadding2),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 10.dp
+            defaultElevation = dimens.elevation
         ),
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -34,15 +34,12 @@ fun TopAppBar(modifier: Modifier = Modifier) {
                     painterResource(id = category.Imageid),
                     contentDescription = category.name,
                     modifier = modifier
-                        .padding(20.dp)
-                        .size(75.dp)
+                        .padding(dimens.itemPadding3)
+                        .size(dimens.itemSize)
                         .clickable { }
                 )
 
             }
-
-
         }
-
     }
 }
