@@ -1,4 +1,4 @@
-package com.example.talkify.ui.main_screen
+package com.example.talkify.ui.main_screen.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
