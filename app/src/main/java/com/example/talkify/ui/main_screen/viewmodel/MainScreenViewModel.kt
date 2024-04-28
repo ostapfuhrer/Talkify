@@ -1,5 +1,7 @@
 package com.example.talkify.ui.main_screen.viewmodel
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,8 +11,11 @@ import com.example.data.database.model.ItemList
 import com.example.data.repository.ItemListRepository
 import com.example.talkify.ui.main_screen.states.MainScreenState
 import com.example.talkify.ui.main_screen.states.MainScreenStates
+import com.example.talkify.utils.CATEGORY_KEY
 import com.example.talkify.utils.Item
+import com.example.talkify.utils.emotions
 import com.example.talkify.utils.fruits
+import com.example.talkify.utils.transports
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,15 +40,16 @@ class MainScreenViewModel @Inject constructor(private val itemListRepository: It
             MainScreenStates.ChangeList -> TODO()
             MainScreenStates.GoHome -> TODO()
             MainScreenStates.OpenSetting -> TODO()
+            else -> {}
         }
 
     }
     init{
         viewModelScope.launch {
-            itemListRepository.AddList(ItemList("Fruits", listOf(1,2,3,4,5,6,7,8,9,10,11,12,13)))
-            itemListRepository.AddList(ItemList("Emotions", listOf(1,12,5,56,1,4)))
-            itemListRepository.AddList(ItemList("Cars", listOf(1,12,5,56,1,4)))
-            makeList("Fruits")
+            itemListRepository.AddList(ItemList("Fruits", listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)))
+            itemListRepository.AddList(ItemList("Emotions", listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)))
+            itemListRepository.AddList(ItemList("Transport", listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)))
+            makeList("Emotions")
         }
     }
 
@@ -57,15 +63,51 @@ class MainScreenViewModel @Inject constructor(private val itemListRepository: It
         return itemListRepository.getListByID(id).ItemList
     }
     private  suspend fun makeList(id: String){
-        val id = getListId(id)
-        for ( n in id){
-            list.add(fruits[n])
-            println(list)
+        val id_List = getListId(id)
+        list.clear()
+        when(id) {
+            "Fruits" -> {
+                for ( n in id_List){
+                    list.add(fruits[n])
+                    println(list)
 
+                }
+            }
+            "Emotions" -> {
+                for ( n in id_List){
+                    list.add(emotions[n])
+                    println(list)
+
+                }
+            }
+            "Transport" -> {
+                for ( n in id_List){
+                    list.add(transports[n])
+                    println(list)
+
+                }
+            }
+            else -> {
+                // виконувати дії для будь-якого іншого випадку
+            }
         }
+
+
         val updated = _uiState.copy(list = list)
         _uiState = updated
 
+    }
+
+    fun saveCategory(context: Context, category: String) {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("Talkify", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putString(CATEGORY_KEY, category)
+        editor.apply()
+    }
+
+    fun getCategory(context: Context): String? {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("Talkify", Context.MODE_PRIVATE)
+        return sharedPreferences.getString(CATEGORY_KEY, null)
     }
 
 

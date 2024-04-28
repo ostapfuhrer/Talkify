@@ -50,7 +50,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             if (state.edit) {
-                TopAppBar()
+                TopAppBar(onClick = {})
             }
         },
         bottomBar = { BottomBar(onEdit = { viewModel.onEvent(MainScreenStates.Edit) }) },
