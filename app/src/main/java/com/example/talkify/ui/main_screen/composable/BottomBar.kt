@@ -12,7 +12,8 @@ import androidx.compose.ui.graphics.Color
 import com.example.talkify.R
 
 
-
+//це винести в окремий файл, тут немає бути цього, тут тільки composable fun ,
+// я створив папку constants , і там створюєш object-файли, в них це все виносиш
 val colors = listOf<Color>(
     Color.White,
     Color(0xB0F7E436)
