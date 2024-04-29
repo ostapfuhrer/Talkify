@@ -31,7 +31,7 @@ fun TopAppBar(modifier: Modifier = Modifier) {
         LazyRow() {
             items(categories) { category ->
                 Image(
-                    painterResource(id = category.Imageid),
+                    painterResource(id = category.imageId),
                     contentDescription = category.name,
                     modifier = modifier
                         .padding(dimens.itemPadding3)

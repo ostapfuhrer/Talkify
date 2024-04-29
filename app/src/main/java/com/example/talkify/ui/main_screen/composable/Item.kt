@@ -21,7 +21,7 @@ fun Item(item: Item, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painterResource(item.Imageid), contentDescription = null,
+            painterResource(item.imageId), contentDescription = null,
             modifier = modifier
                 .size(dimens.itemSize)
         )

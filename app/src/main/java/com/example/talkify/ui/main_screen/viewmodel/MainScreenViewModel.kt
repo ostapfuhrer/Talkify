@@ -13,23 +13,22 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor() : ViewModel() {
 
     private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
-        private set
 
     val uiState: MainScreenState
         get() = _uiState
 
     fun onEvent(state: MainScreenStates) {
         when (state) {
-            MainScreenStates.Edit -> editScreen()
+            MainScreenStates.ToggleEditMode -> editModeScreen()
             MainScreenStates.ChangeList -> TODO()
             MainScreenStates.GoHome -> TODO()
             MainScreenStates.OpenSetting -> TODO()
         }
     }
 
-    private fun editScreen() {
+    private fun editModeScreen() {
         val current = _uiState.edit
-        val updated = _uiState.copy(!current)
+        val updated = _uiState.copy(edit = !current)
         _uiState = updated
     }
 }

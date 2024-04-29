@@ -5,35 +5,96 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.example.talkify.R
+import com.example.talkify.ui.main_screen.states.MainScreenStates
+import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
+import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.editIcons
+import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.getCurrentIcons
+import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.standardIcons
 
 
 //це винести в окремий файл, тут немає бути цього, тут тільки composable fun ,
 // я створив папку constants , і там створюєш object-файли, в них це все виносиш
-val colors = listOf<Color>(
+val colors = listOf(
     Color.White,
     Color(0xB0F7E436)
 )
 
 @Composable
-fun BottomBar(modifier: Modifier = Modifier, onEdit:()->Unit,) {
-    Row(modifier = modifier.fillMaxWidth()
-        .background(brush = gradientBackgroundBrash(colors = colors)),horizontalArrangement = Arrangement.SpaceEvenly) {
-        RoundIcon(R.drawable.home,{})
-        RoundIcon(R.drawable.edit,{onEdit()})
-        RoundIcon(R.drawable.settings,{})
+fun BottomBar(viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
+    val state = viewModel.uiState
+
+    val currentIcons = remember { mutableStateMapOf<String, Int>().apply { putAll(standardIcons) } }
+
+    val standardOnClicks = mapOf(
+        "home" to { /* Обробка натискання на кнопку "home" */ },
+        "edit" to { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
+        "settings" to { /* Обробка натискання на кнопку "settings" */ }
+    )
+
+    val editModeOnClicks = mapOf(
+        "home" to { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
+        "edit" to { /* Обробка натискання на кнопку "arrow_discard" */ },
+        "settings" to { /* Обробка натискання на кнопку "add" */ }
+    )
+
+    val onClicks = if (state.edit) editModeOnClicks else standardOnClicks
+
+    when {
+        state.edit -> {
+            editIcons.forEach { (iconName, iconId) ->
+                currentIcons[iconName] =
+                    iconId
+            }
+        }
+
+        else -> {
+            standardIcons.forEach { (iconName, iconId) ->
+                currentIcons[iconName] =
+                    iconId
+            }
+        }
+    }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(brush = gradientBackgroundBrash(colors = colors)),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        val icons = getCurrentIcons(state)
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(brush = gradientBackgroundBrash(colors = colors)),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            DisplayIcons(icons, onClicks)
+        }
     }
 }
 
 @Composable
-fun gradientBackgroundBrash(colors:List<Color>): Brush {
+fun gradientBackgroundBrash(colors: List<Color>): Brush {
     return Brush.linearGradient(
-        colors= colors,
+        colors = colors,
         start = Offset.Zero,
         end = Offset(0F, Float.POSITIVE_INFINITY)
     )
+}
+@Composable
+private fun DisplayIcons(
+    icons: Map<String, Int>,
+    onClicks: Map<String, () -> Unit>
+) {
+    standardIcons.keys.forEach { iconName ->
+        RoundIcon(
+            icons[iconName] ?: error("Icon not found for $iconName"),
+            onClick = onClicks[iconName] ?: {}
+        )
+    }
 }
