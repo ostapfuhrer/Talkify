@@ -23,6 +23,7 @@ class MainScreenViewModel @Inject constructor() : ViewModel() {
             MainScreenStates.ChangeList -> TODO()
             MainScreenStates.GoHome -> TODO()
             MainScreenStates.OpenSetting -> TODO()
+            else -> {}
         }
     }
 

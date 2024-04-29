@@ -5,4 +5,6 @@ sealed class MainScreenStates {
     object ChangeList : MainScreenStates()
     object OpenSetting : MainScreenStates()
     object GoHome : MainScreenStates()
+    object DiscardChanges:MainScreenStates()
+    object AddItems:MainScreenStates()
 }

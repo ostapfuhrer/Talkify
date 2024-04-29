@@ -12,10 +12,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.example.talkify.ui.main_screen.states.MainScreenStates
-import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
+import com.example.talkify.ui.main_screen.utils.IconType
 import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.editIcons
 import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.getCurrentIcons
 import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.standardIcons
+import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 
 
 //це винести в окремий файл, тут немає бути цього, тут тільки composable fun ,
@@ -29,37 +30,29 @@ val colors = listOf(
 fun BottomBar(viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
     val state = viewModel.uiState
 
-    val currentIcons = remember { mutableStateMapOf<String, Int>().apply { putAll(standardIcons) } }
+    val defaultIcons = remember {
+        mutableStateMapOf<IconType, Int>().apply {
+            putAll(standardIcons)
+        }
+    }
+    val editIcons = remember {
+        mutableStateMapOf<IconType, Int>().apply {
+            putAll(editIcons)
+        }
+    }
 
     val standardOnClicks = mapOf(
-        "home" to { /* Обробка натискання на кнопку "home" */ },
-        "edit" to { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
-        "settings" to { /* Обробка натискання на кнопку "settings" */ }
+        IconType.HOME to { /* Обробка натискання на кнопку "home" */ },
+        IconType.EDIT to { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
+        IconType.SETTINGS to { /* Обробка натискання на кнопку "settings" */ }
     )
 
     val editModeOnClicks = mapOf(
-        "home" to { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
-        "edit" to { /* Обробка натискання на кнопку "arrow_discard" */ },
-        "settings" to { /* Обробка натискання на кнопку "add" */ }
+        IconType.BACK to { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
+        IconType.DISCARD_CHANGES to { /* Обробка натискання на кнопку "arrow_discard" */ },
+        IconType.ADD to { /* Обробка натискання на кнопку "add" */ }
     )
-
     val onClicks = if (state.edit) editModeOnClicks else standardOnClicks
-
-    when {
-        state.edit -> {
-            editIcons.forEach { (iconName, iconId) ->
-                currentIcons[iconName] =
-                    iconId
-            }
-        }
-
-        else -> {
-            standardIcons.forEach { (iconName, iconId) ->
-                currentIcons[iconName] =
-                    iconId
-            }
-        }
-    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -86,15 +79,23 @@ fun gradientBackgroundBrash(colors: List<Color>): Brush {
         end = Offset(0F, Float.POSITIVE_INFINITY)
     )
 }
+
 @Composable
 private fun DisplayIcons(
-    icons: Map<String, Int>,
-    onClicks: Map<String, () -> Unit>
+    icons: Map<IconType, Int>,
+    onClicks: Map<IconType, () -> Unit>
 ) {
-    standardIcons.keys.forEach { iconName ->
+    icons.keys.forEach { iconType ->
         RoundIcon(
-            icons[iconName] ?: error("Icon not found for $iconName"),
-            onClick = onClicks[iconName] ?: {}
+            icons[iconType] ?: error("Icon not found for $iconType"),
+            onClick = onClicks[iconType] ?: {}
         )
     }
 }
+
+
+
+
+
+
+
