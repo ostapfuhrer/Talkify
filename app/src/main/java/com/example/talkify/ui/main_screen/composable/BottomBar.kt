@@ -5,17 +5,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.example.talkify.ui.main_screen.states.MainScreenStates
 import com.example.talkify.ui.main_screen.utils.IconType
-import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.editIcons
-import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.getCurrentIcons
-import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.standardIcons
+import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.updateCurrentIcons
 import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 
 
@@ -29,18 +25,6 @@ val colors = listOf(
 @Composable
 fun BottomBar(viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
     val state = viewModel.uiState
-
-    val defaultIcons = remember {
-        mutableStateMapOf<IconType, Int>().apply {
-            putAll(standardIcons)
-        }
-    }
-    val editIcons = remember {
-        mutableStateMapOf<IconType, Int>().apply {
-            putAll(editIcons)
-        }
-    }
-
     val standardOnClicks = mapOf(
         IconType.HOME to { /* Обробка натискання на кнопку "home" */ },
         IconType.EDIT to { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
@@ -52,14 +36,16 @@ fun BottomBar(viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
         IconType.DISCARD_CHANGES to { /* Обробка натискання на кнопку "arrow_discard" */ },
         IconType.ADD to { /* Обробка натискання на кнопку "add" */ }
     )
+
     val onClicks = if (state.edit) editModeOnClicks else standardOnClicks
+
     Row(
         modifier = modifier
             .fillMaxWidth()
             .background(brush = gradientBackgroundBrash(colors = colors)),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        val icons = getCurrentIcons(state)
+        val icons = updateCurrentIcons(state)
         Row(
             modifier = modifier
                 .fillMaxWidth()

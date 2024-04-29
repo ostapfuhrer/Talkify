@@ -24,7 +24,7 @@ object IconsBottomBarUtils {
         IconType.ADD to R.drawable.add
     )
 
-    fun getCurrentIcons(state: MainScreenState): Map<IconType, Int> {
+    fun updateCurrentIcons(state: MainScreenState): Map<IconType, Int> {
         return if (state.edit) {
             editIcons
         } else {
