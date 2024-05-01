@@ -49,7 +49,7 @@ android {
 dependencies {
     implementation("com.google.firebase:firebase-crashlytics-buildtools:2.9.9")
     val roomVersion = "2.6.1"
-    api(project(":domain"))
+   // api(project(":domain"))
     implementation("androidx.core:core-ktx:1.12.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

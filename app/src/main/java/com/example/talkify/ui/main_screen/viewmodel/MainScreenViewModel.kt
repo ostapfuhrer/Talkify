@@ -8,7 +8,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.database.model.ItemList
-import com.example.data.repository.ItemListRepository
+import com.example.domain.usecase.AddListUseCase
+import com.example.domain.usecase.GetListUseCase
 import com.example.talkify.ui.main_screen.states.MainScreenState
 import com.example.talkify.ui.main_screen.states.MainScreenStates
 import com.example.talkify.utils.CATEGORY_KEY
@@ -21,7 +22,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainScreenViewModel @Inject constructor(private val itemListRepository: ItemListRepository) : ViewModel() {
+class MainScreenViewModel @Inject constructor(
+    private val   addListUseCase: AddListUseCase,
+//    private val   updateListUseCase: UpdateListUseCase,
+   private val   getListUseCase: GetListUseCase,
+
+    ) : ViewModel() {
 
     private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
         private set
@@ -46,10 +52,10 @@ class MainScreenViewModel @Inject constructor(private val itemListRepository: It
     }
     init{
         viewModelScope.launch {
-            itemListRepository.AddList(ItemList("Fruits", listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)))
-            itemListRepository.AddList(ItemList("Emotions", listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)))
-            itemListRepository.AddList(ItemList("Transport", listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)))
-            makeList("Emotions")
+            addListUseCase(ItemList("Fruits", listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)))
+            addListUseCase(ItemList("Emotions", listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)))
+            addListUseCase(ItemList("Transport", listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)))
+            makeList("Transport")
         }
     }
 
@@ -60,7 +66,7 @@ class MainScreenViewModel @Inject constructor(private val itemListRepository: It
     }
 
     private suspend fun getListId(id: String): List<Int> {
-        return itemListRepository.getListByID(id).ItemList
+        return getListUseCase(id).ItemList
     }
     private  suspend fun makeList(id: String){
         val id_List = getListId(id)
@@ -88,7 +94,7 @@ class MainScreenViewModel @Inject constructor(private val itemListRepository: It
                 }
             }
             else -> {
-                // виконувати дії для будь-якого іншого випадку
+
             }
         }
 

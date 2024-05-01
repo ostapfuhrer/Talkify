@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.domain.repository.IExampleRepository
-import com.example.domain.usecase.IExampleUseCase
+//import com.example.domain.repository.IExampleRepository
+//import com.example.domain.usecase.IExampleUseCase
 import com.example.talkify.ui.main_screen.screen.MainScreen
 import com.example.talkify.ui.theme.TalkifyTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,11 +19,11 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var exampleRepository: IExampleRepository
-
-    @Inject
-    lateinit var exampleUseCase: IExampleUseCase
+//    @Inject
+//    lateinit var exampleRepository: IExampleRepository
+//
+//    @Inject
+//    lateinit var exampleUseCase: IExampleUseCase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // exampleRepository.getModel()

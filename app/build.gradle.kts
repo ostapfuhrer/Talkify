@@ -52,6 +52,7 @@ android {
 
 }
 dependencies {
+    implementation(project(":domain"))
     val lifecycleVersion = "2.7.0"
     val roomVersion = "2.6.1"
     api(project(":data"))
