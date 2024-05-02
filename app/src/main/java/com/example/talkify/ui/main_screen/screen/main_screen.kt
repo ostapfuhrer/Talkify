@@ -23,6 +23,7 @@ import com.example.talkify.R
 import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.Item
 import com.example.talkify.ui.main_screen.composable.TopAppBar
+import com.example.talkify.ui.main_screen.states.MainScreenStates
 import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 import com.example.talkify.ui.theme.dimens
 import com.example.talkify.utils.items
@@ -41,9 +42,17 @@ fun MainScreen(
                 TopAppBar()
             }
         },
-        bottomBar = { BottomBar(viewModel = viewModel) },
-        modifier = modifier
-            .fillMaxSize()
+        bottomBar = {
+            BottomBar(
+                state = state,
+                onEditButtonClick = { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
+                onHomeButtonClick = { /* Обробка натискання на кнопку "home" */ },
+                onSettingsButtonClick = { /* Обробка натискання на кнопку "settings" */ },
+                onBackButtonClick = { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
+                modifier = modifier
+            )
+        },
+        modifier = modifier.fillMaxSize()
 
     ) { paddingValues ->
         MainHome(paddingValues)

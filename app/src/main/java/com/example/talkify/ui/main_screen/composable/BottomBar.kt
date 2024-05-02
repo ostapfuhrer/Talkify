@@ -9,10 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.example.talkify.ui.main_screen.states.MainScreenStates
+import com.example.talkify.ui.main_screen.states.MainScreenState
 import com.example.talkify.ui.main_screen.utils.IconType
 import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.updateCurrentIcons
-import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 
 
 //це винести в окремий файл, тут немає бути цього, тут тільки composable fun ,
@@ -23,22 +22,14 @@ val colors = listOf(
 )
 
 @Composable
-fun BottomBar(viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
-    val state = viewModel.uiState
-    val standardOnClicks = mapOf(
-        IconType.HOME to { /* Обробка натискання на кнопку "home" */ },
-        IconType.EDIT to { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
-        IconType.SETTINGS to { /* Обробка натискання на кнопку "settings" */ }
-    )
-
-    val editModeOnClicks = mapOf(
-        IconType.BACK to { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
-        IconType.DISCARD_CHANGES to { /* Обробка натискання на кнопку "arrow_discard" */ },
-        IconType.ADD to { /* Обробка натискання на кнопку "add" */ }
-    )
-
-    val onClicks = if (state.edit) editModeOnClicks else standardOnClicks
-
+fun BottomBar(
+    state: MainScreenState,
+    onEditButtonClick: () -> Unit,
+    onHomeButtonClick: () -> Unit,
+    onSettingsButtonClick: () -> Unit,
+    onBackButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -52,7 +43,13 @@ fun BottomBar(viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
                 .background(brush = gradientBackgroundBrash(colors = colors)),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            DisplayIcons(icons, onClicks)
+            DisplayIcons(
+                icons,
+                onEditButtonClick,
+                onHomeButtonClick,
+                onSettingsButtonClick,
+                onBackButtonClick,
+            )
         }
     }
 }
@@ -67,18 +64,28 @@ fun gradientBackgroundBrash(colors: List<Color>): Brush {
 }
 
 @Composable
-private fun DisplayIcons(
+fun DisplayIcons(
     icons: Map<IconType, Int>,
-    onClicks: Map<IconType, () -> Unit>
+    onEditButtonClick: () -> Unit,
+    onHomeButtonClick: () -> Unit,
+    onSettingsButtonClick: () -> Unit,
+    onBackButtonClick: () -> Unit,
 ) {
+    val onDefaultClick: () -> Unit = {}
     icons.keys.forEach { iconType ->
+        val onClick = when (iconType) {
+            IconType.HOME -> onHomeButtonClick
+            IconType.EDIT -> onEditButtonClick
+            IconType.SETTINGS -> onSettingsButtonClick
+            IconType.BACK -> onBackButtonClick
+            else -> onDefaultClick
+        }
         RoundIcon(
             icons[iconType] ?: error("Icon not found for $iconType"),
-            onClick = onClicks[iconType] ?: {}
+            onClick = onClick
         )
     }
 }
-
 
 
 
