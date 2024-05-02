@@ -22,7 +22,7 @@ class MainScreenViewModel @Inject constructor() : ViewModel() {
             MainScreenStates.ToggleEditMode -> editModeScreen()
             MainScreenStates.ChangeList -> TODO()
             MainScreenStates.GoHome -> TODO()
-            MainScreenStates.OpenSetting -> TODO()
+            MainScreenStates.OpenSetting -> openBottomSheetSettings()
             else -> {}
         }
     }
@@ -33,3 +33,6 @@ class MainScreenViewModel @Inject constructor() : ViewModel() {
         _uiState = updated
     }
 }
+    private fun openBottomSheetSettings() {
+
+    }

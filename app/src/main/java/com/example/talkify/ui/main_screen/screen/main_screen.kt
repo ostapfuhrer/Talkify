@@ -47,7 +47,7 @@ fun MainScreen(
                 state = state,
                 onEditButtonClick = { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
                 onHomeButtonClick = { /* Обробка натискання на кнопку "home" */ },
-                onSettingsButtonClick = { /* Обробка натискання на кнопку "settings" */ },
+                onSettingsButtonClick = { viewModel.onEvent(MainScreenStates.OpenSetting) },
                 onBackButtonClick = { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
                 modifier = modifier
             )
