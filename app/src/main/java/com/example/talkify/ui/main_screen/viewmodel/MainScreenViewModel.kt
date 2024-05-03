@@ -21,6 +21,8 @@ class MainScreenViewModel @Inject constructor(
 //    private val   updateListUseCase: UpdateListUseCase,
    private val   getListUseCase: GetListUseCase,
     //private val makeListUseCase: MakeListUseCase
+    //
+
 
     ) : ViewModel() {
 
@@ -32,7 +34,7 @@ class MainScreenViewModel @Inject constructor(
 
 
 
-
+val category ="Fruits"
 
 
     fun onEvent(state: MainScreenStates) {
@@ -47,12 +49,12 @@ class MainScreenViewModel @Inject constructor(
     init{
         viewModelScope.launch {
             try {
-                makeList("Emotions")
+                makeList(category)
             }
             catch (e:Exception){//  при першому створенні бази даних не встигають створитися категорії
 
                 delay(5000)
-                makeList("Emotions")
+                makeList(category)
 
             }
 //
@@ -60,6 +62,8 @@ class MainScreenViewModel @Inject constructor(
             println(allItems)
         }
     }
+
+
     private fun editScreen() {
         val current = _uiState.edit
         val updated = _uiState.copy(edit = !current)
@@ -72,8 +76,7 @@ class MainScreenViewModel @Inject constructor(
             val itemList = it.mapNotNull { allItems.getOrNull(it) }
             updateUIState(itemList)
         } ?: kotlin.run {
-            // Обробка випадку, коли результат getListUseCase(id) є null
-            // Наприклад, можна вивести повідомлення про помилку або взяти деякі інші заходи
+
            Log.e("TALKIFY", "PROBLEM")
         }
     }
