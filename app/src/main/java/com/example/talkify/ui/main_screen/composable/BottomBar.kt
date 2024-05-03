@@ -10,13 +10,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.example.talkify.R
+import com.example.talkify.utils.colors
 
-
-
-val colors = listOf<Color>(
-    Color.White,
-    Color(0xB0F7E436)
-)
 
 @Composable
 fun BottomBar(modifier: Modifier = Modifier, onEdit:()->Unit,) {

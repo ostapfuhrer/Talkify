@@ -14,13 +14,13 @@ import kotlinx.coroutines.flow.Flow
 interface ItemListDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun AddList(itemList: ItemList)
+     fun addList(itemList: ItemList)
 
     @Update
-    suspend fun UpdateList(itemList: ItemList)
+    suspend fun updateList(itemList: ItemList)
 
     @Delete
-    suspend fun Deleteist(itemList: ItemList)
+    suspend fun deleteList(itemList: ItemList)
 
 
     @Query("Select * from AppLists")

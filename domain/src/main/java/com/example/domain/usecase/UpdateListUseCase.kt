@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class UpdateListUseCase @Inject constructor(private  val itemListRepository: ItemListRepository) {
     suspend operator fun invoke(itemList: ItemList) {
-        itemListRepository.UpdateList(itemList)
+        itemListRepository.updateList(itemList)
     }
 }

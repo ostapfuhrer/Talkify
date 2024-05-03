@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface ItemListRepository {
 
-    suspend fun AddList(itemList: ItemList)
-    suspend fun UpdateList(itemList: ItemList)
-    suspend fun Deleteist(itemList: ItemList)
+    suspend fun addList(itemList: ItemList)
+    suspend fun updateList(itemList: ItemList)
+    suspend fun deleteList(itemList: ItemList)
     fun getAllLists(): Flow<List<ItemList>>
     fun getListByID(id:String): ItemList
 }

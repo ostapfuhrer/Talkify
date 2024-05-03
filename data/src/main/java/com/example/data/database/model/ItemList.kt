@@ -10,5 +10,5 @@ import com.example.data.database.TypeConverter
 data class ItemList(
     @PrimaryKey(autoGenerate = false)
     val id:String= "",
-    val ItemList:List<Int> =  emptyList(),
+    val itemList:List<Int> =  emptyList(),
 )
