@@ -13,16 +13,19 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor() : ViewModel() {
 
     private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
+    private var _isSettingsSheetOpen: Boolean by mutableStateOf(false)
 
     val uiState: MainScreenState
         get() = _uiState
+    val isSettingsSheetOpen: Boolean
+        get() = _isSettingsSheetOpen
 
     fun onEvent(state: MainScreenStates) {
         when (state) {
             MainScreenStates.ToggleEditMode -> editModeScreen()
             MainScreenStates.ChangeList -> TODO()
             MainScreenStates.GoHome -> TODO()
-            MainScreenStates.OpenSetting -> openBottomSheetSettings()
+            MainScreenStates.OpenSetting -> toggleSettingsSheet()
             else -> {}
         }
     }
@@ -32,7 +35,8 @@ class MainScreenViewModel @Inject constructor() : ViewModel() {
         val updated = _uiState.copy(edit = !current)
         _uiState = updated
     }
-}
-    private fun openBottomSheetSettings() {
 
+    private fun toggleSettingsSheet() {
+        _isSettingsSheetOpen = !_isSettingsSheetOpen
     }
+}

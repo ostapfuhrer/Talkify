@@ -15,11 +15,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -35,9 +31,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun BottomSheet(
     imagePainter: Painter,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
+    isSheetOpen: Boolean,
+    onToggleSheet: () -> Unit
 ) {
-    var openBottomSheet by remember { mutableStateOf(false) }
+    //var openBottomSheet by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false
@@ -48,12 +46,12 @@ fun BottomSheet(
         contentDescription = "Open Bottom Sheet",
         modifier = Modifier
             .size(50.dp)
-            .clickable { openBottomSheet = !openBottomSheet }
+            .clickable { onToggleSheet() }
     )
 
-    if (openBottomSheet) {
+    if (isSheetOpen) {
         ModalBottomSheet(
-            onDismissRequest = { openBottomSheet = false },
+            onDismissRequest = { onToggleSheet() },
             sheetState = bottomSheetState,
             windowInsets = BottomSheetDefaults.windowInsets
         ) {
@@ -66,12 +64,11 @@ fun BottomSheet(
             ) {
                 content()
             }
-
             Button(
                 onClick = {
                     scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
                         if (!bottomSheetState.isVisible) {
-                            openBottomSheet = false
+                            onToggleSheet()
                         }
                     }
                 }
