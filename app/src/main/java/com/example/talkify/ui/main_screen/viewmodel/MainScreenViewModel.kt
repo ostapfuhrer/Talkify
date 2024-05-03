@@ -59,7 +59,7 @@ val category ="Fruits"
             }
 //
 
-            println(allItems)
+
         }
     }
 
