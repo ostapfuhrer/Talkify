@@ -1,5 +1,5 @@
 package com.example.talkify.ui.main_screen.states
 
-import com.example.talkify.utils.Item
+import com.example.domain.utiles.ItemUI
 
-data class MainScreenState(val edit:Boolean= false, val list: List<Item> = emptyList())
+data class MainScreenState(val edit:Boolean= false, val list: List<ItemUI> = emptyList())

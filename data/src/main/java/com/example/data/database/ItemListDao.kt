@@ -24,8 +24,8 @@ interface ItemListDao {
 
 
     @Query("Select * from AppLists")
-    fun getAllLists(): Flow<List<ItemList>>
+     fun getAllLists(): Flow<List<ItemList>>
 
     @Query("Select * from AppLists where id =:id")
-    fun getListByID(id:String): ItemList
+    suspend fun getListByID(id:String): ItemList
 }

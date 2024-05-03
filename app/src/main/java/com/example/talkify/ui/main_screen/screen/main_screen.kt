@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.domain.utiles.ItemUI
 import com.example.talkify.R
 import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.Item
@@ -26,10 +27,6 @@ import com.example.talkify.ui.main_screen.composable.TopAppBar
 import com.example.talkify.ui.main_screen.states.MainScreenStates
 import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 import com.example.talkify.ui.theme.dimens
-import com.example.talkify.utils.Item
-
-
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +39,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             if (state.edit) {
-                TopAppBar(onClick = {})
+                TopAppBar(onClick = { viewModel.onEvent(MainScreenStates.ChangeList(it))})
             }
         },
         bottomBar = { BottomBar(onEdit = { viewModel.onEvent(MainScreenStates.Edit) }) },
@@ -55,7 +52,7 @@ fun MainScreen(
 }
 
 @Composable
-fun MainHome(paddingValues: PaddingValues, list:List<Item>, modifier: Modifier = Modifier) {
+fun MainHome(paddingValues: PaddingValues, list:List<ItemUI>, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()

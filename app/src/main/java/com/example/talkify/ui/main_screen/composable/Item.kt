@@ -11,12 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import com.example.domain.utiles.ItemUI
 import com.example.talkify.ui.theme.dimens
-import com.example.talkify.utils.Item
 
 
 @Composable
-fun Item(item: Item, modifier: Modifier = Modifier) {
+fun Item(item: ItemUI, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Column(
         modifier = modifier

@@ -13,5 +13,5 @@ class DefaultContainer @Inject constructor(private val itemListDao: ItemListDao)
     override suspend fun deleteList(itemList: ItemList)  = itemListDao.deleteList(itemList)
     override fun getAllLists(): Flow<List<ItemList>>  = itemListDao.getAllLists()
 
-    override    fun getListByID(id:String): ItemList = itemListDao.getListByID(id)
+    override   suspend fun getListByID(id:String): ItemList = itemListDao.getListByID(id)
 }

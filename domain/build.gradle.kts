@@ -38,6 +38,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     //Hilt di
     implementation("com.google.dagger:hilt-android:2.46")
+   // implementation(project(":app"))
 
     kapt("com.google.dagger:hilt-android-compiler:2.46")
 
