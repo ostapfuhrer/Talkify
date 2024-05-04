@@ -12,9 +12,7 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DomainModule {
-
     companion object {
-
         @Provides
         fun provideUpdateListUseCase(itemListRepository: ItemListRepository): UpdateListUseCase {
             return UpdateListUseCase(itemListRepository)
@@ -25,15 +23,10 @@ abstract class DomainModule {
             return GetListUseCase(itemListRepository)
         }
 
-
         @Provides
-        fun provideMakeListUseCase(
-            itemListRepository: ItemListRepository,
-
-        ): MakeListUseCase {
-            return MakeListUseCase(itemListRepository,)
+        fun provideMakeListUseCase(itemListRepository: ItemListRepository): MakeListUseCase {
+            return MakeListUseCase(itemListRepository)
         }
-
 
     }
 }
