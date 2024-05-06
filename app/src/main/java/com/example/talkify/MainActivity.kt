@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.domain.repository.IExampleRepository
 import com.example.domain.usecase.IExampleUseCase
 import com.example.talkify.ui.theme.TalkifyTheme
@@ -25,8 +26,7 @@ class MainActivity : ComponentActivity() {
     lateinit var exampleUseCase: IExampleUseCase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // exampleRepository.getModel()
-
+        installSplashScreen()
         setContent {
             TalkifyTheme {
                 // A surface container using the 'background' color from the theme
