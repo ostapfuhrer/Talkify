@@ -25,7 +25,7 @@ fun BottomSheetContent(viewModel: MainScreenViewModel) {
                 contentDescription = "Brightness",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .size(70.dp)
+                    .size(50.dp)
             )
             SettingsSlider(
                 sliderValue = viewModel.brightness,
@@ -38,7 +38,7 @@ fun BottomSheetContent(viewModel: MainScreenViewModel) {
                 contentDescription = "Sound",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .size(60.dp)
+                    .size(50.dp)
             )
             SettingsSlider(
                 sliderValue = viewModel.volume,
