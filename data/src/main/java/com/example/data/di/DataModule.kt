@@ -15,11 +15,11 @@ import dagger.hilt.components.SingletonComponent
  class DataModule {
     companion object {
         @Provides
-        fun provideBookDao(app: Application): ItemListDao {
+        fun provideListDao(app: Application): ItemListDao {
             return ItemListDataBase.getDataBase(app).ItemListDao()
         }
         @Provides
-        fun provideBookRepo(listDao: ItemListDao): ItemListRepository {
+        fun provideListRepo(listDao: ItemListDao): ItemListRepository {
             return DefaultContainer(listDao)
         }
     }
