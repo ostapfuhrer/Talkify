@@ -21,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.talkify.R
 import com.example.talkify.ui.main_screen.composable.BottomBar
+import com.example.talkify.ui.main_screen.composable.BottomSheet
+import com.example.talkify.ui.main_screen.composable.BottomSheetContent
 import com.example.talkify.ui.main_screen.composable.Item
 import com.example.talkify.ui.main_screen.composable.TopAppBar
 import com.example.talkify.ui.main_screen.states.MainScreenStates
@@ -37,6 +39,7 @@ fun MainScreen(
 ) {
     val state = viewModel.uiState
     Scaffold(
+        modifier = modifier.fillMaxSize(),
         topBar = {
             if (state.edit) {
                 TopAppBar()
@@ -52,15 +55,13 @@ fun MainScreen(
                 modifier = modifier
             )
         },
-        modifier = modifier.fillMaxSize()
-
     ) { paddingValues ->
-        MainHome(paddingValues)
+        MainHome(paddingValues = paddingValues, viewModel = viewModel, modifier = modifier)
     }
 }
 
 @Composable
-fun MainHome(paddingValues: PaddingValues, modifier: Modifier = Modifier) {
+fun MainHome(paddingValues: PaddingValues, viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -90,6 +91,17 @@ fun MainHome(paddingValues: PaddingValues, modifier: Modifier = Modifier) {
                 }
             }
         }
+        BottomSheet(
+            imagePainter = painterResource(id = R.drawable.settings),
+            content = {
+            // Define what content to show inside the bottom sheet
+                BottomSheetContent(viewModel)
+            },
+            isSheetOpen = viewModel.isSettingsSheetOpen,  // Pass the ViewModel's state
+            onToggleSheet = {
+                viewModel.onEvent(MainScreenStates.OpenSetting)  // This should toggle the bottom sheet's visibility
+                }
+        )
     }
 }
 

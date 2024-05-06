@@ -9,10 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomSheetDefaults
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -20,11 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 
 /**
  *в функцію буде передаватись два параметра
- *зображення, яке буде виступати посиланням та те що треба відобразит
+ *зображення, яке буде виступати посиланням та те що треба відобразити
  *в bottomScheet
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +45,7 @@ fun BottomSheet(
             .size(50.dp)
             .clickable { onToggleSheet() }
     )
-
+    println("Bottom Sheet is open: $isSheetOpen")  // Debugging output
     if (isSheetOpen) {
         ModalBottomSheet(
             onDismissRequest = { onToggleSheet() },
@@ -64,29 +61,6 @@ fun BottomSheet(
             ) {
                 content()
             }
-            Button(
-                onClick = {
-                    scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
-                        if (!bottomSheetState.isVisible) {
-                            onToggleSheet()
-                        }
-                    }
-                }
-            ) {
-                Text("Hide Bottom Sheet")
-            }
         }
     }
 }
-
-/*щось типу такого
-fun BottomSheetExamplePreview() {
-    BottomSheetTalkify(
-        imagePainter = painterResource(id = R.drawable.settings),
-        content = {
-            Text("This is a simple text inside the bottom sheet")
-            // можна додавати компоненти
-        }
-    )
-}
- */
