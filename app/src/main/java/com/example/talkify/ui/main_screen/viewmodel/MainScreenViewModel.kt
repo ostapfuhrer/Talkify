@@ -71,8 +71,12 @@ class MainScreenViewModel @Inject constructor(
 
     private fun toggleSettingsSheet() {
         _isSettingsSheetOpen = !_isSettingsSheetOpen
-        Log.d("BottomSheet", "Is bottom sheet open: $_isSettingsSheetOpen")  // Use Android's Log class to check state changes
+        Log.d(
+            "BottomSheet",
+            "Is bottom sheet open: $_isSettingsSheetOpen"
+        )  // Use Android's Log class to check state changes
     }
+
     fun updateBrightness(newValue: Float) {
         brightness.floatValue = newValue
     }
@@ -87,6 +91,7 @@ class MainScreenViewModel @Inject constructor(
         layoutParams.screenBrightness = brightness  // Brightness value must be between 0.0 and 1.0
         window.attributes = layoutParams
     }
+
     private fun updateUIState(itemList: List<ItemUI>) {
         _uiState = _uiState.copy(list = itemList)
     }
