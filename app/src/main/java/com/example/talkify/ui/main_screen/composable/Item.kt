@@ -28,9 +28,8 @@ fun Item(item: ItemUI, modifier: Modifier = Modifier) {
             modifier = modifier
                 .size(dimens.itemSize)
                 .clickable {
-
-                        val music: MediaPlayer = MediaPlayer.create(context, item.audioId )
-                       music.start()
+                    val music: MediaPlayer = MediaPlayer.create(context, item.audioId )
+                    music.start()
                 }
         )
     }

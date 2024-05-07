@@ -45,8 +45,8 @@ val category ="Fruits"
                 updateUIState( makeListUseCase(category))
             }
             catch (e:Exception){//  при першому створенні бази даних не встигають створитися категорії
-                delay(5000)
-                updateUIState( makeListUseCase(category))
+                delay(8000)
+               updateUIState( makeListUseCase(category))
 
             }
         }
@@ -58,6 +58,6 @@ val category ="Fruits"
 
     }
     private fun updateUIState(itemList:List<ItemUI>) {
-        _uiState = _uiState.copy(list = itemList )
+        _uiState = _uiState.copy(list = itemList ?: emptyList())
     }
 }
