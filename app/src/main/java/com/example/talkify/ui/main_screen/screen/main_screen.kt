@@ -1,5 +1,6 @@
 package com.example.talkify.ui.main_screen.screen
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -61,7 +63,10 @@ fun MainScreen(
 }
 
 @Composable
-fun MainHome(paddingValues: PaddingValues, viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
+fun MainHome(paddingValues: PaddingValues,
+             viewModel: MainScreenViewModel,
+             modifier: Modifier = Modifier) {
+    val activity = LocalContext.current as Activity  // Obtain Activity instance from LocalContext
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -95,7 +100,7 @@ fun MainHome(paddingValues: PaddingValues, viewModel: MainScreenViewModel, modif
             imagePainter = painterResource(id = R.drawable.settings),
             content = {
             // Define what content to show inside the bottom sheet
-                BottomSheetContent(viewModel)
+                BottomSheetContent(activity, viewModel)
             },
             isSheetOpen = viewModel.isSettingsSheetOpen,  // Pass the ViewModel's state
             onToggleSheet = {

@@ -45,15 +45,17 @@ class MainScreenViewModel @Inject constructor() : ViewModel() {
         _isSettingsSheetOpen = !_isSettingsSheetOpen
         Log.d("BottomSheet", "Is bottom sheet open: $_isSettingsSheetOpen")  // Use Android's Log class to check state changes
     }
-    fun updateBrightness(newValue: Float) {
-        brightness.floatValue = newValue
+    fun updateBrightness(activity: Activity, newValue: Float) {
+        val windowBrightness = newValue / 100.0f  // Convert 0-100 range to 0-1
+        adjustBrightness(activity, windowBrightness)
+        brightness.floatValue = newValue  // Update the state
     }
 
     fun updateVolume(newValue: Float) {
         volume.floatValue = newValue
     }
 
-    fun adjustBrightness(activity: Activity, brightness: Float) {
+    private fun adjustBrightness(activity: Activity, brightness: Float) {
         val window = activity.window
         val layoutParams = window.attributes
         layoutParams.screenBrightness = brightness  // Brightness value must be between 0.0 and 1.0

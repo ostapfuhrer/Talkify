@@ -1,5 +1,6 @@
 package com.example.talkify.ui.main_screen.composable
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +15,7 @@ import com.example.talkify.R
 import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 
 @Composable
-fun BottomSheetContent(viewModel: MainScreenViewModel) {
+fun BottomSheetContent(activity: Activity, viewModel: MainScreenViewModel) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row{
             Image(
@@ -26,7 +27,9 @@ fun BottomSheetContent(viewModel: MainScreenViewModel) {
             )
             SettingsSlider(
                 sliderValue = viewModel.brightness,
-                onValueChange = viewModel::updateBrightness
+                onValueChange = { newValue ->
+                    viewModel.updateBrightness(activity, newValue)
+                }
             )
         }
         Row {
@@ -39,7 +42,9 @@ fun BottomSheetContent(viewModel: MainScreenViewModel) {
             )
             SettingsSlider(
                 sliderValue = viewModel.volume,
-                onValueChange = viewModel::updateVolume
+                onValueChange = { newValue ->
+                    viewModel.updateVolume(newValue) // Assuming updateVolume just needs a float
+                }
             )
         }
     }
