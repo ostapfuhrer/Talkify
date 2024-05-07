@@ -23,9 +23,6 @@ import com.example.talkify.R
 import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.BottomSheet
 import com.example.talkify.ui.main_screen.composable.BottomSheetContent
-import com.example.domain.utiles.ItemUI
-
-import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.Item
 import com.example.talkify.ui.main_screen.composable.TopAppBar
 import com.example.talkify.ui.main_screen.states.MainScreenStates
@@ -44,7 +41,7 @@ fun MainScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             if (state.edit) {
-                TopAppBar(onClick = { viewModel.onEvent(MainScreenStates.ChangeList(it))})
+                TopAppBar(onClick = { viewModel.onEvent(MainScreenStates.ChangeList(it)) })
 
             }
         },
@@ -64,8 +61,12 @@ fun MainScreen(
 }
 
 @Composable
-fun MainHome(paddingValues: PaddingValues, viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
-   val list = viewModel.uiState.list
+fun MainHome(
+    paddingValues: PaddingValues,
+    viewModel: MainScreenViewModel,
+    modifier: Modifier = Modifier
+) {
+    val list = viewModel.uiState.list
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -83,6 +84,7 @@ fun MainHome(paddingValues: PaddingValues, viewModel: MainScreenViewModel, modif
                     contentDescription = null,
                     modifier = Modifier.size(dimens.boxSize)
                 )
+
             }
 
         } else {
@@ -99,13 +101,13 @@ fun MainHome(paddingValues: PaddingValues, viewModel: MainScreenViewModel, modif
         BottomSheet(
             imagePainter = painterResource(id = R.drawable.settings),
             content = {
-            // Define what content to show inside the bottom sheet
+                // Define what content to show inside the bottom sheet
                 BottomSheetContent(viewModel)
             },
             isSheetOpen = viewModel.isSettingsSheetOpen,  // Pass the ViewModel's state
             onToggleSheet = {
                 viewModel.onEvent(MainScreenStates.OpenSetting)  // This should toggle the bottom sheet's visibility
-                }
+            }
         )
     }
 }

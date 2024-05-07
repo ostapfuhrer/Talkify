@@ -1,6 +1,6 @@
 package com.example.talkify.ui.main_screen.viewmodel
 
-<<<<<<< HEAD
+
 import android.app.Activity
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -12,20 +12,12 @@ import com.example.talkify.ui.main_screen.states.MainScreenState
 import com.example.talkify.ui.main_screen.states.MainScreenStates
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.MakeListUseCase
 import com.example.domain.utiles.ItemUI
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-
-
+import kotlinx.coroutines.Dispatchers
 
 
 @HiltViewModel
@@ -47,7 +39,7 @@ class MainScreenViewModel @Inject constructor(
         when (state) {
             MainScreenStates.ToggleEditMode -> editModeScreen()
             is MainScreenStates.ChangeList -> {
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     updateUIState(makeListUseCase(state.listName))
                 }
             }
@@ -60,11 +52,11 @@ class MainScreenViewModel @Inject constructor(
 
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 updateUIState(makeListUseCase(category))
             } catch (e: Exception) {//  при першому створенні бази даних не встигають створитися категорії
-                delay(8000)
+                delay(1000)
                 updateUIState(makeListUseCase(category))
 
             }
