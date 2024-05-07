@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.talkify.ui.main_screen.states.MainScreenState
 import com.example.talkify.ui.main_screen.states.MainScreenStates
@@ -22,7 +23,8 @@ import kotlinx.coroutines.Dispatchers
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    private val makeListUseCase: MakeListUseCase
+    private val makeListUseCase: MakeListUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
@@ -34,7 +36,7 @@ class MainScreenViewModel @Inject constructor(
         get() = _uiState
     val isSettingsSheetOpen: Boolean
         get() = _isSettingsSheetOpen
-    val category = "Fruits"
+    var category = "Fruits"
     fun onEvent(state: MainScreenStates) {
         when (state) {
             MainScreenStates.ToggleEditMode -> editModeScreen()
@@ -52,6 +54,10 @@ class MainScreenViewModel @Inject constructor(
 
 
     init {
+        savedStateHandle.get<String>("categoryName")?.let {
+            category = it
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 updateUIState(makeListUseCase(category))

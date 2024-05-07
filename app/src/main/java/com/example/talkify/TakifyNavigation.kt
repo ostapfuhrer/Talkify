@@ -22,18 +22,14 @@ fun TalkifyNavigation() {
         }
         composable(
             Screens.MainScreen.route +
-                    "?categoryId={categoryId}",
+                    "?categoryName={categoryName}",
             arguments = listOf(
-                navArgument("categoryId"){
-                    type = NavType.IntType
+                navArgument("categoryName"){
+                    type = NavType.StringType
                 }
             )
         ) {
-            val categoryId = it.arguments?.getInt("categoryId")
-            MainScreen(
-                navController = navController,
-                categoryId = categoryId
-            )
+            MainScreen(navController = navController)
         }
     }
 

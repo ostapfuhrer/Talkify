@@ -38,7 +38,6 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,7 +65,7 @@ fun HomeScreen(
                 Item(category = categories.component1(),
                     modifier = Modifier.clickable {
                         viewModel.onEvent(HomeScreenEvents.NavigateToCategory(categories.component1()))
-                        navController.navigate(Screens.MainScreen.route + "?categoryId=${categories.component1().id}")
+                        navController.navigate(Screens.MainScreen.route + "?categoryName=${categories.component1().name}")
                     })
                 Row(
                     Modifier.fillMaxWidth(),
@@ -75,19 +74,19 @@ fun HomeScreen(
                     Item(category = categories.component2(),
                         modifier = Modifier.clickable {
                             viewModel.onEvent(HomeScreenEvents.NavigateToCategory(categories.component2()))
-                            navController.navigate(Screens.MainScreen.route + "?categoryId=${categories.component2().id}")
+                            navController.navigate(Screens.MainScreen.route + "?categoryName=${categories.component2().name}")
                         })
                     Item(category = categories.component3(),
                         modifier = Modifier.clickable {
                             viewModel.onEvent(HomeScreenEvents.NavigateToCategory(categories.component3()))
-                            navController.navigate(Screens.MainScreen.route + "?categoryId=${categories.component3().id}")
+                            navController.navigate(Screens.MainScreen.route + "?categoryName=${categories.component3().name}")
                         })
 
                 }
                 Item(category = categories.component4(),
                     modifier = Modifier.clickable {
                         viewModel.onEvent(HomeScreenEvents.NavigateToCategory(categories.component4()))
-                        navController.navigate(Screens.MainScreen.route + "?categoryId=${categories.component4().id}")
+                        navController.navigate(Screens.MainScreen.route + "?categoryName=${categories.component4().name}")
                     })
 
             }

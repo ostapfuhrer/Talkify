@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.talkify.R
 import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.BottomSheet
@@ -34,6 +35,7 @@ import com.example.talkify.ui.theme.dimens
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     viewModel: MainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 ) {
     val state = viewModel.uiState
@@ -49,7 +51,7 @@ fun MainScreen(
             BottomBar(
                 state = state,
                 onEditButtonClick = { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
-                onHomeButtonClick = { /* Обробка натискання на кнопку "home" */ },
+                onHomeButtonClick = { navController.popBackStack() },
                 onSettingsButtonClick = { viewModel.onEvent(MainScreenStates.OpenSetting) },
                 onBackButtonClick = { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
                 modifier = modifier
@@ -112,11 +114,5 @@ fun MainHome(
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    MainScreen()
-}
 
 
