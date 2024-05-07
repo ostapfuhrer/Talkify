@@ -15,7 +15,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.talkify.R
 import com.example.talkify.ui.theme.dimens
 
@@ -46,6 +45,6 @@ fun RoundIcon(image: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun IconPreview(){
-    RoundIcon(R.drawable.edit1,{})
+fun IconPreview() {
+    RoundIcon(R.drawable.edit1, {})
 }

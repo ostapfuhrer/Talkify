@@ -17,7 +17,7 @@ import com.example.talkify.ui.theme.dimens
 import com.example.talkify.utils.categories
 
 @Composable
-fun TopAppBar(modifier: Modifier = Modifier, onClick:(String)->Unit) {
+fun TopAppBar(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
     Card(
         modifier = modifier
             .padding(dimens.itemPadding2),
@@ -36,7 +36,7 @@ fun TopAppBar(modifier: Modifier = Modifier, onClick:(String)->Unit) {
                     modifier = modifier
                         .padding(dimens.itemPadding3)
                         .size(dimens.itemSize)
-                        .clickable {onClick(category.name) }
+                        .clickable { onClick(category.name) }
                 )
 
             }
