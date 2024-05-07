@@ -23,26 +23,29 @@ import com.example.talkify.R
 import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.BottomSheet
 import com.example.talkify.ui.main_screen.composable.BottomSheetContent
+import com.example.domain.utiles.ItemUI
+
+import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.Item
 import com.example.talkify.ui.main_screen.composable.TopAppBar
 import com.example.talkify.ui.main_screen.states.MainScreenStates
 import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 import com.example.talkify.ui.theme.dimens
-import com.example.talkify.utils.items
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainScreenViewModel = hiltViewModel()
+    viewModel: MainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 ) {
     val state = viewModel.uiState
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
             if (state.edit) {
-                TopAppBar()
+                TopAppBar(onClick = { viewModel.onEvent(MainScreenStates.ChangeList(it))})
+
             }
         },
         bottomBar = {
@@ -62,12 +65,13 @@ fun MainScreen(
 
 @Composable
 fun MainHome(paddingValues: PaddingValues, viewModel: MainScreenViewModel, modifier: Modifier = Modifier) {
+   val list = viewModel.uiState.list
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(paddingValues)
     ) {
-        if (items.isEmpty()) {
+        if (list.isEmpty()) {
             Column(
                 modifier = modifier
                     .fillMaxHeight()
@@ -86,8 +90,9 @@ fun MainHome(paddingValues: PaddingValues, viewModel: MainScreenViewModel, modif
                 modifier = modifier.fillMaxHeight(),
                 columns = GridCells.Adaptive(minSize = dimens.gridSellSize),
             ) {
-                items(items.size) { item ->
-                    Item(items[item])
+
+                items(list.size) { item ->
+                    Item(list[item])
                 }
             }
         }

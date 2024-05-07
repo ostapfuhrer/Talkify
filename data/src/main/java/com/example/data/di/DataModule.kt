@@ -1,15 +1,26 @@
 package com.example.data.di
 
-import com.example.data.repository.ExampleRepository
-import com.example.domain.repository.IExampleRepository
-import dagger.Binds
+import android.app.Application
+import com.example.data.database.ItemListDao
+import com.example.data.database.ItemListDataBase
+import com.example.data.repository.DefaultContainer
+import com.example.data.repository.ItemListRepository
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataModule {
-    @Binds
-    internal abstract fun bindExampleRepository(exampleRepository: ExampleRepository): IExampleRepository
+ class DataModule {
+    companion object {
+        @Provides
+        fun provideListDao(app: Application): ItemListDao {
+            return ItemListDataBase.getDataBase(app).ItemListDao()
+        }
+        @Provides
+        fun provideListRepo(listDao: ItemListDao): ItemListRepository {
+            return DefaultContainer(listDao)
+        }
+    }
 }

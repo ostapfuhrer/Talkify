@@ -53,6 +53,7 @@ android {
 }
 dependencies {
     implementation("androidx.compose.material3:material3-android:1.2.1")
+    implementation(project(":domain"))
     val lifecycleVersion = "2.7.0"
     val roomVersion = "2.6.1"
     api(project(":data"))

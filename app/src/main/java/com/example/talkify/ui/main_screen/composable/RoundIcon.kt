@@ -14,7 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.talkify.R
 import com.example.talkify.ui.theme.dimens
 
 @Composable
@@ -24,7 +25,7 @@ fun RoundIcon(image: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
             .padding(dimens.itemPadding1)
             .size(dimens.boxSize)
             .shadow(
-                elevation = 10.dp,
+                elevation = dimens.elevation,
                 spotColor = Color.LightGray,
                 shape = RoundedCornerShape(50)
             )
@@ -34,10 +35,16 @@ fun RoundIcon(image: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
         Image(
             painterResource(id = image), contentDescription = null,
             modifier
-                .size(dimens.itemSize)
+                .size(dimens.iconSize)
                 .clickable { onClick() }
-                .clip(RoundedCornerShape(50))
+                .clip(RoundedCornerShape(10))
                 .background(Color.White),
         )
     }
+}
+
+@Preview
+@Composable
+fun IconPreview() {
+    RoundIcon(R.drawable.edit1, {})
 }

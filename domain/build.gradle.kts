@@ -38,8 +38,12 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     //Hilt di
     implementation("com.google.dagger:hilt-android:2.46")
-    implementation("androidx.test.ext:junit-ktx:1.1.5")
+
+
     kapt("com.google.dagger:hilt-android-compiler:2.46")
+
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
+    implementation(project(":data"))
 }
 kapt {
     correctErrorTypes = true

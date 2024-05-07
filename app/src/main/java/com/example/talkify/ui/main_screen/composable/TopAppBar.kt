@@ -17,7 +17,7 @@ import com.example.talkify.ui.theme.dimens
 import com.example.talkify.utils.categories
 
 @Composable
-fun TopAppBar(modifier: Modifier = Modifier) {
+fun TopAppBar(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
     Card(
         modifier = modifier
             .padding(dimens.itemPadding2),
@@ -31,12 +31,12 @@ fun TopAppBar(modifier: Modifier = Modifier) {
         LazyRow() {
             items(categories) { category ->
                 Image(
-                    painterResource(id = category.imageId),
+                    painterResource(id = category.Imageid),
                     contentDescription = category.name,
                     modifier = modifier
                         .padding(dimens.itemPadding3)
                         .size(dimens.itemSize)
-                        .clickable { }
+                        .clickable { onClick(category.name) }
                 )
 
             }
