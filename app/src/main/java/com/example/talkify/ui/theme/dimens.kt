@@ -9,9 +9,9 @@ data class Dimens(
     val itemPadding2: Dp,
     val itemPadding3: Dp,
     val itemSize: Dp,
-    val iconSize: Dp,
     val boxSize: Dp,
     val gridSellSize: Dp,
+    val border: Dp
 )
 
 
@@ -21,7 +21,7 @@ val dimens = Dimens(
     itemPadding2 = 15.dp,
     itemPadding3 = 20.dp,
     itemSize = 70.dp,
-    iconSize = 50.dp,
-    boxSize = 70.dp,
-    gridSellSize = 128.dp
+    boxSize = 90.dp,
+    gridSellSize = 128.dp,
+    border = 1.dp
 )

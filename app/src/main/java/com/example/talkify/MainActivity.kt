@@ -10,12 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.talkify.ui.main_screen.screen.MainScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.domain.repository.IExampleRepository
+import com.example.domain.usecase.IExampleUseCase
 import com.example.talkify.ui.theme.TalkifyTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,30 +23,9 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             TalkifyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MainScreen()
-                }
+                TalkifyNavigation()
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TalkifyTheme {
-        Greeting("Android")
-    }
-}
