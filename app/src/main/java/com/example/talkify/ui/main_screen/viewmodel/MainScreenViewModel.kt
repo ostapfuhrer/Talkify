@@ -37,25 +37,25 @@ class MainScreenViewModel @Inject constructor(
 
     private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
     private var _isSettingsSheetOpen: Boolean by mutableStateOf(false)
-    var brightness =mutableFloatStateOf(savedStateHandle["brightness"] ?: 100f)
-    private var _isBasketSheetOpen: Boolean by mutableStateOf(false)
+    var brightness =mutableFloatStateOf(savedStateHandle.get<Float>("brightness") ?: 50f)
+
 
     val uiState: MainScreenState
         get() = _uiState
     val isSettingsSheetOpen: Boolean
         get() = _isSettingsSheetOpen
-    val isBasketSheetOpen: Boolean
-        get() = _isBasketSheetOpen
     var category = "Fruits"
     fun onEvent(state: MainScreenStates) {
         when (state) {
             MainScreenStates.ToggleEditMode -> editModeScreen()
-            is MainScreenStates.ChangeList -> { viewModelScope.launch(Dispatchers.IO) { updateUIState(makeListUseCase(state.listName)) } }
-            is MainScreenStates.GoHome -> TODO()
-            is MainScreenStates.OpenSetting -> toggleSettingsSheet()
-            is MainScreenStates.AddItems -> {toggleBasketSheet()
-                addItemsToBasket()
+            is MainScreenStates.ChangeList -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    updateUIState(makeListUseCase(state.listName))
+                }
             }
+
+            MainScreenStates.GoHome -> TODO()
+            MainScreenStates.OpenSetting -> toggleSettingsSheet()
             else -> {}
         }
     }
@@ -90,28 +90,8 @@ class MainScreenViewModel @Inject constructor(
             "Is bottom sheet open: $_isSettingsSheetOpen"
         )  // Use Android's Log class to check state changes
     }
-        private fun toggleBasketSheet() {
-        _isBasketSheetOpen = !_isBasketSheetOpen
-    }
-    private fun addItemsToBasket() {
-    //   val updatedList = _uiState.list.map { item ->
-    //       if (item.isInBasket) {
-    //           // Якщо елемент уже знаходиться в кошику, нічого не робимо
-    //           item
-    //       } else {
-    //           // Якщо елемент не в кошику, але вибраний для додавання, додаємо його у кошик
-    //           if (item.isSelectedForAdd) {
-    //               item.copy(isInBasket = true)
-    //           } else {
-    //               item
-    //           }
-    //       }
-    //   }
-    //   _uiState = _uiState.copy(list = updatedList)
-    }
 
     fun updateBrightness(activity: Activity, newValue: Float) {
-        Log.d("0099", "Updating brightness to $newValue")
         val windowBrightness = newValue / 100.0f  // Convert 0-100 range to 0-1
         adjustBrightness(activity, windowBrightness)
         brightness.floatValue = newValue  // Update the state
@@ -124,7 +104,7 @@ class MainScreenViewModel @Inject constructor(
         volume.floatValue = newValue  // Update the state
     }
 
-    fun adjustBrightness(activity: Activity, brightness: Float) {
+    private fun adjustBrightness(activity: Activity, brightness: Float) {
         val window = activity.window
         val layoutParams = window.attributes
         layoutParams.screenBrightness = brightness  // Brightness value must be between 0.0 and 1.0

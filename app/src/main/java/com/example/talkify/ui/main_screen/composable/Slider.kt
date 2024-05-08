@@ -1,6 +1,5 @@
 package com.example.talkify.ui.main_screen.composable
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -18,7 +17,6 @@ fun SettingsSlider(
     onValueChange: (Float) -> Unit
 ) {
     Column {
-        Log.d("0099", "Rendering slider in SettingsSlider with value:  ${sliderValue.value}")
         Slider(
             value = sliderValue.value,
             onValueChange = { newValue ->
