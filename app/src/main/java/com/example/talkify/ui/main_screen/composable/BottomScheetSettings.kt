@@ -43,7 +43,7 @@ fun BottomSheetContent(activity: Activity, viewModel: MainScreenViewModel) {
             SettingsSlider(
                 sliderValue = viewModel.volume,
                 onValueChange = { newValue ->
-                    viewModel.updateVolume(newValue) // Assuming updateVolume just needs a float
+                    viewModel.updateVolume(newValue)
                 }
             )
         }
