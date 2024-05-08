@@ -53,6 +53,7 @@ android {
 }
 dependencies {
     implementation("androidx.compose.material3:material3-android:1.2.1")
+    implementation(project(":domain"))
     val lifecycleVersion = "2.7.0"
     val roomVersion = "2.6.1"
     api(project(":data"))
@@ -74,6 +75,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    // Navigation
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     // View model
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     // ViewModel utilities for Compose

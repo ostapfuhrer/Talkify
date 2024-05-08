@@ -12,14 +12,11 @@ import androidx.compose.ui.graphics.Color
 import com.example.talkify.ui.main_screen.states.MainScreenState
 import com.example.talkify.ui.main_screen.utils.IconType
 import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.updateCurrentIcons
-
+import com.example.talkify.R
+import com.example.talkify.utils.colors
 
 //це винести в окремий файл, тут немає бути цього, тут тільки composable fun ,
 // я створив папку constants , і там створюєш object-файли, в них це все виносиш
-val colors = listOf(
-    Color.White,
-    Color(0xB0F7E436)
-)
 
 @Composable
 fun BottomBar(

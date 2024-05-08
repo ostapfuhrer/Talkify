@@ -13,9 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 val activeTrackColor = Color(0xFFF6891E) // orange
 val inactiveTrackColor = Color(0xFFA9A5A5) // Grey
 val thumbColor = Color(0xFFEC417A) // pink
+
 @Composable
-fun SettingsSlider(sliderValue: MutableState<Float>,
-                   onValueChange: (Float) -> Unit) {
+fun SettingsSlider(
+    sliderValue: MutableState<Float>,
+    onValueChange: (Float) -> Unit
+) {
     Column {
         Slider(
             value = sliderValue.value,
@@ -25,9 +28,9 @@ fun SettingsSlider(sliderValue: MutableState<Float>,
             },
             valueRange = 0f..100f,
             colors = SliderDefaults.colors(
-            activeTrackColor = activeTrackColor,
-            inactiveTrackColor = inactiveTrackColor,
-            thumbColor = thumbColor
+                activeTrackColor = activeTrackColor,
+                inactiveTrackColor = inactiveTrackColor,
+                thumbColor = thumbColor
             )
         )
     }

@@ -14,8 +14,8 @@ enum class IconType {
 
 object IconsBottomBarUtils {
     private val standardIcons = mapOf(
-        IconType.HOME to R.drawable.home,
-        IconType.EDIT to R.drawable.edit,
+        IconType.HOME to R.drawable.home1,
+        IconType.EDIT to R.drawable.edit1,
         IconType.SETTINGS to R.drawable.settings
     )
     private val editIcons = mapOf(
