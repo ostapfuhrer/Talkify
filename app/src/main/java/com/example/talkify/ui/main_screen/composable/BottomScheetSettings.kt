@@ -26,7 +26,9 @@ fun BottomSheetSettingsContent(viewModel: MainScreenViewModel) {
             )
             SettingsSlider(
                 sliderValue = viewModel.brightness,
-                onValueChange = viewModel::updateBrightness
+                onValueChange = { newValue ->
+                    viewModel.updateBrightness(activity, newValue)
+                }
             )
         }
         Row {
@@ -39,7 +41,9 @@ fun BottomSheetSettingsContent(viewModel: MainScreenViewModel) {
             )
             SettingsSlider(
                 sliderValue = viewModel.volume,
-                onValueChange = viewModel::updateVolume
+                onValueChange = { newValue ->
+                    viewModel.updateVolume(newValue) // Assuming updateVolume just needs a float
+                }
             )
         }
     }
