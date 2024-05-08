@@ -27,7 +27,7 @@ fun BottomSheetSettingsContent(viewModel: MainScreenViewModel) {
             SettingsSlider(
                 sliderValue = viewModel.brightness,
                 onValueChange = { newValue ->
-                    viewModel.updateBrightness(activity, newValue)
+                   // viewModel.updateBrightness(activity, newValue)
                 }
             )
         }
