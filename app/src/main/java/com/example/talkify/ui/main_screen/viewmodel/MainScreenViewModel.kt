@@ -9,16 +9,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.talkify.ui.main_screen.states.MainScreenState
-import com.example.talkify.ui.main_screen.states.MainScreenStates
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.MakeListUseCase
 import com.example.domain.utiles.ItemUI
+import com.example.talkify.ui.main_screen.states.MainScreenState
+import com.example.talkify.ui.main_screen.states.MainScreenStates
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 
 @HiltViewModel
@@ -29,6 +29,7 @@ class MainScreenViewModel @Inject constructor(
 
     private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
     private var _isSettingsSheetOpen: Boolean by mutableStateOf(false)
+    private var _isBasketSheetOpen: Boolean by mutableStateOf(false)
     var brightness = mutableFloatStateOf(50f) // Default brightness value
     var volume = mutableFloatStateOf(50f) // Default volume value
 
@@ -36,18 +37,18 @@ class MainScreenViewModel @Inject constructor(
         get() = _uiState
     val isSettingsSheetOpen: Boolean
         get() = _isSettingsSheetOpen
+    val isBasketSheetOpen: Boolean
+        get() = _isBasketSheetOpen
     var category = "Fruits"
     fun onEvent(state: MainScreenStates) {
         when (state) {
             MainScreenStates.ToggleEditMode -> editModeScreen()
-            is MainScreenStates.ChangeList -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    updateUIState(makeListUseCase(state.listName))
-                }
+            is MainScreenStates.ChangeList -> { viewModelScope.launch(Dispatchers.IO) { updateUIState(makeListUseCase(state.listName)) } }
+            is MainScreenStates.GoHome -> TODO()
+            is MainScreenStates.OpenSetting -> toggleSettingsSheet()
+            is MainScreenStates.AddItems -> {toggleBasketSheet()
+                addItemsToBasket()
             }
-
-            MainScreenStates.GoHome -> TODO()
-            MainScreenStates.OpenSetting -> toggleSettingsSheet()
             else -> {}
         }
     }
@@ -81,6 +82,26 @@ class MainScreenViewModel @Inject constructor(
             "BottomSheet",
             "Is bottom sheet open: $_isSettingsSheetOpen"
         )  // Use Android's Log class to check state changes
+    }
+
+    private fun toggleBasketSheet() {
+        _isBasketSheetOpen = !_isBasketSheetOpen
+    }
+    private fun addItemsToBasket() {
+    //   val updatedList = _uiState.list.map { item ->
+    //       if (item.isInBasket) {
+    //           // Якщо елемент уже знаходиться в кошику, нічого не робимо
+    //           item
+    //       } else {
+    //           // Якщо елемент не в кошику, але вибраний для додавання, додаємо його у кошик
+    //           if (item.isSelectedForAdd) {
+    //               item.copy(isInBasket = true)
+    //           } else {
+    //               item
+    //           }
+    //       }
+    //   }
+    //   _uiState = _uiState.copy(list = updatedList)
     }
 
     fun updateBrightness(newValue: Float) {

@@ -7,6 +7,6 @@ data class ItemUI(
     val title:String,
     @DrawableRes
     val imageId: Int,
-    val audioId: Int
-
+    val audioId: Int,
+    var isInBasket: Boolean = false
 )

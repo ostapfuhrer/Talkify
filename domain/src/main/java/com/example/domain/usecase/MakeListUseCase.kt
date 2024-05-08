@@ -8,13 +8,9 @@ import javax.inject.Inject
 
 class MakeListUseCase @Inject constructor(
     private val itemListRepository: ItemListRepository,
-
 ) {
-
-
-    suspend operator  fun invoke(id: String) : List<ItemUI>{
+    suspend operator fun invoke(id: String): List<ItemUI> {
         val idList = itemListRepository.getListByID(id).itemList
-       return idList.mapNotNull { allItems.getOrNull(it) }
-
+        return idList.mapNotNull { allItems.getOrNull(it) }
     }
 }

@@ -12,11 +12,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.talkify.ui.main_screen.states.MainScreenState
 import com.example.talkify.ui.main_screen.utils.IconType
 import com.example.talkify.ui.main_screen.utils.IconsBottomBarUtils.updateCurrentIcons
-import com.example.talkify.R
 import com.example.talkify.utils.colors
-
-//це винести в окремий файл, тут немає бути цього, тут тільки composable fun ,
-// я створив папку constants , і там створюєш object-файли, в них це все виносиш
 
 @Composable
 fun BottomBar(
@@ -25,6 +21,7 @@ fun BottomBar(
     onHomeButtonClick: () -> Unit,
     onSettingsButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
+    onAddButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -46,6 +43,7 @@ fun BottomBar(
                 onHomeButtonClick,
                 onSettingsButtonClick,
                 onBackButtonClick,
+                onAddButtonClick,
             )
         }
     }
@@ -67,6 +65,7 @@ fun DisplayIcons(
     onHomeButtonClick: () -> Unit,
     onSettingsButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
+    onAddButtonClick: () -> Unit,
 ) {
     val onDefaultClick: () -> Unit = {}
     icons.keys.forEach { iconType ->
@@ -75,6 +74,7 @@ fun DisplayIcons(
             IconType.EDIT -> onEditButtonClick
             IconType.SETTINGS -> onSettingsButtonClick
             IconType.BACK -> onBackButtonClick
+            IconType.ADD ->onAddButtonClick
             else -> onDefaultClick
         }
         RoundIcon(

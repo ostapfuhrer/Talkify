@@ -45,7 +45,6 @@ fun BottomSheet(
             .size(50.dp)
             .clickable { onToggleSheet() }
     )
-    println("Bottom Sheet is open: $isSheetOpen")  // Debugging output
     if (isSheetOpen) {
         ModalBottomSheet(
             onDismissRequest = { onToggleSheet() },

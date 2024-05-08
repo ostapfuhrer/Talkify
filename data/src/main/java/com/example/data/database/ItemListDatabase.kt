@@ -6,20 +6,23 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.data.database.model.ItemList
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
-@Database(entities = arrayOf(ItemList::class), version = 2)
-abstract  class ItemListDataBase : RoomDatabase() {
+@Database(entities = [ItemList::class], version = 2)
+abstract class ItemListDataBase : RoomDatabase() {
 
-    abstract fun ItemListDao():ItemListDao
+    abstract fun ItemListDao(): ItemListDao
 
-    companion object{
+    companion object {
         @Volatile
-        private var Instance : ItemListDataBase? = null
-        fun getDataBase( context: Context): ItemListDataBase {
+        private var Instance: ItemListDataBase? = null
+
+        @OptIn(DelicateCoroutinesApi::class)
+        fun getDataBase(context: Context): ItemListDataBase {
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, ItemListDataBase::class.java, "ItemLIst_database")
                     .allowMainThreadQueries()
@@ -43,6 +46,5 @@ abstract  class ItemListDataBase : RoomDatabase() {
             }
 
         }
-
     }
 }

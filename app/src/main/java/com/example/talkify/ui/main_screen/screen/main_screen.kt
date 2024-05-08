@@ -11,19 +11,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.talkify.R
 import com.example.talkify.ui.main_screen.composable.BottomBar
 import com.example.talkify.ui.main_screen.composable.BottomSheet
-import com.example.talkify.ui.main_screen.composable.BottomSheetContent
+import com.example.talkify.ui.main_screen.composable.BottomSheetAddToBasketContent
+import com.example.talkify.ui.main_screen.composable.BottomSheetSettingsContent
 import com.example.talkify.ui.main_screen.composable.Item
 import com.example.talkify.ui.main_screen.composable.TopAppBar
 import com.example.talkify.ui.main_screen.states.MainScreenStates
@@ -31,7 +30,6 @@ import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 import com.example.talkify.ui.theme.dimens
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
@@ -54,6 +52,7 @@ fun MainScreen(
                 onHomeButtonClick = { navController.popBackStack() },
                 onSettingsButtonClick = { viewModel.onEvent(MainScreenStates.OpenSetting) },
                 onBackButtonClick = { viewModel.onEvent(MainScreenStates.ToggleEditMode) },
+                onAddButtonClick = { viewModel.onEvent(MainScreenStates.AddItems) },
                 modifier = modifier
             )
         },
@@ -69,6 +68,8 @@ fun MainHome(
     modifier: Modifier = Modifier
 ) {
     val list = viewModel.uiState.list
+    viewModel.uiState.basketList
+    val editModeState = viewModel.uiState.edit
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -82,7 +83,7 @@ fun MainHome(
                 verticalArrangement = Arrangement.Center
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.bucket),
+                    painter = painterResource(id = R.drawable.basket),
                     contentDescription = null,
                     modifier = Modifier.size(dimens.boxSize)
                 )
@@ -96,21 +97,36 @@ fun MainHome(
             ) {
 
                 items(list.size) { item ->
-                    Item(list[item])
+                    //add delete_icon for every item
+                    Item(item = list[item], isEditMode = editModeState)
                 }
             }
-        }
-        BottomSheet(
-            imagePainter = painterResource(id = R.drawable.settings),
-            content = {
-                // Define what content to show inside the bottom sheet
-                BottomSheetContent(viewModel)
-            },
-            isSheetOpen = viewModel.isSettingsSheetOpen,  // Pass the ViewModel's state
-            onToggleSheet = {
-                viewModel.onEvent(MainScreenStates.OpenSetting)  // This should toggle the bottom sheet's visibility
+            if (editModeState) {
+                BottomSheet(
+                    imagePainter = painterResource(id = R.drawable.basket),
+                    content = {
+                        // Define what content to show inside the bottom sheet
+                        BottomSheetAddToBasketContent()
+                    },
+                    isSheetOpen = viewModel.isBasketSheetOpen,  // Pass the ViewModel's state
+                    onToggleSheet = {
+                        viewModel.onEvent(MainScreenStates.AddItems)  // This should toggle the bottom sheet's visibility
+                    }
+                )
+            } else {
+                BottomSheet(
+                    imagePainter = painterResource(id = R.drawable.setting1),
+                    content = {
+                        // Define what content to show inside the bottom sheet
+                        BottomSheetSettingsContent(viewModel)
+                    },
+                    isSheetOpen = viewModel.isSettingsSheetOpen,  // Pass the ViewModel's state
+                    onToggleSheet = {
+                        viewModel.onEvent(MainScreenStates.OpenSetting)  // This should toggle the bottom sheet's visibility
+                    }
+                )
             }
-        )
+        }
     }
 }
 

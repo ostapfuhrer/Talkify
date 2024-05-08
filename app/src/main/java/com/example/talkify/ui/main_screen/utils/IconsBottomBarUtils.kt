@@ -16,7 +16,7 @@ object IconsBottomBarUtils {
     private val standardIcons = mapOf(
         IconType.HOME to R.drawable.home1,
         IconType.EDIT to R.drawable.edit1,
-        IconType.SETTINGS to R.drawable.settings
+        IconType.SETTINGS to R.drawable.setting1
     )
     private val editIcons = mapOf(
         IconType.BACK to R.drawable.arrow_back,

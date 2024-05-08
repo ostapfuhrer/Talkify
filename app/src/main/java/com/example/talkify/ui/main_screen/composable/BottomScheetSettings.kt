@@ -14,7 +14,7 @@ import com.example.talkify.R
 import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 
 @Composable
-fun BottomSheetContent(viewModel: MainScreenViewModel) {
+fun BottomSheetSettingsContent(viewModel: MainScreenViewModel) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row{
             Image(
