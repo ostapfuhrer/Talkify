@@ -2,13 +2,8 @@ package com.example.talkify.ui.main_screen.viewmodel
 
 
 import android.app.Activity
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import android.content.Context
+import android.media.AudioManager
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.MakeListUseCase
 import com.example.domain.utiles.ItemUI
@@ -16,19 +11,32 @@ import com.example.talkify.ui.main_screen.states.MainScreenState
 import com.example.talkify.ui.main_screen.states.MainScreenStates
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import androidx.lifecycle.viewModelScope
+import com.example.domain.usecase.MakeListUseCase
+import com.example.domain.utiles.ItemUI
+import com.example.talkify.ui.main_screen.states.MainScreenState
+import com.example.talkify.ui.main_screen.states.MainScreenStates
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
     private val makeListUseCase: MakeListUseCase,
-    savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    @ApplicationContext private val applicationContext: Context
 ) : ViewModel() {
+
+    private val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    private var maxVolume: Int = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+    var volume = mutableFloatStateOf(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat())
 
     private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
     private var _isSettingsSheetOpen: Boolean by mutableStateOf(false)
+    var brightness =mutableFloatStateOf(savedStateHandle.get<Float>("brightness") ?: 50f)
+
     private var _isBasketSheetOpen: Boolean by mutableStateOf(false)
     var brightness = mutableFloatStateOf(50f) // Default brightness value
     var volume = mutableFloatStateOf(50f) // Default volume value
@@ -84,6 +92,11 @@ class MainScreenViewModel @Inject constructor(
         )  // Use Android's Log class to check state changes
     }
 
+    fun updateBrightness(activity: Activity, newValue: Float) {
+        val windowBrightness = newValue / 100.0f  // Convert 0-100 range to 0-1
+        adjustBrightness(activity, windowBrightness)
+        brightness.floatValue = newValue  // Update the state
+        savedStateHandle.set("brightness", newValue)  // Save the updated value
     private fun toggleBasketSheet() {
         _isBasketSheetOpen = !_isBasketSheetOpen
     }
@@ -109,7 +122,9 @@ class MainScreenViewModel @Inject constructor(
     }
 
     fun updateVolume(newValue: Float) {
-        volume.floatValue = newValue
+        val newVolume = (newValue / 100 * maxVolume).toInt()
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_SHOW_UI)
+        volume.floatValue = newValue  // Update the state
     }
 
     fun adjustBrightness(activity: Activity, brightness: Float) {
