@@ -4,13 +4,13 @@ package com.example.talkify.ui.main_screen.viewmodel
 import android.app.Activity
 import android.content.Context
 import android.media.AudioManager
-import androidx.lifecycle.viewModelScope
-import com.example.domain.usecase.MakeListUseCase
-import com.example.domain.utiles.ItemUI
-import com.example.talkify.ui.main_screen.states.MainScreenState
-import com.example.talkify.ui.main_screen.states.MainScreenStates
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.MakeListUseCase
 import com.example.domain.utiles.ItemUI
@@ -19,6 +19,8 @@ import com.example.talkify.ui.main_screen.states.MainScreenStates
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -35,11 +37,8 @@ class MainScreenViewModel @Inject constructor(
 
     private var _uiState: MainScreenState by mutableStateOf(MainScreenState())
     private var _isSettingsSheetOpen: Boolean by mutableStateOf(false)
-    var brightness =mutableFloatStateOf(savedStateHandle.get<Float>("brightness") ?: 50f)
-
+    var brightness =mutableFloatStateOf(savedStateHandle["brightness"] ?: 100f)
     private var _isBasketSheetOpen: Boolean by mutableStateOf(false)
-    var brightness = mutableFloatStateOf(50f) // Default brightness value
-    var volume = mutableFloatStateOf(50f) // Default volume value
 
     val uiState: MainScreenState
         get() = _uiState
@@ -91,13 +90,7 @@ class MainScreenViewModel @Inject constructor(
             "Is bottom sheet open: $_isSettingsSheetOpen"
         )  // Use Android's Log class to check state changes
     }
-
-    fun updateBrightness(activity: Activity, newValue: Float) {
-        val windowBrightness = newValue / 100.0f  // Convert 0-100 range to 0-1
-        adjustBrightness(activity, windowBrightness)
-        brightness.floatValue = newValue  // Update the state
-        savedStateHandle.set("brightness", newValue)  // Save the updated value
-    private fun toggleBasketSheet() {
+        private fun toggleBasketSheet() {
         _isBasketSheetOpen = !_isBasketSheetOpen
     }
     private fun addItemsToBasket() {
@@ -117,8 +110,12 @@ class MainScreenViewModel @Inject constructor(
     //   _uiState = _uiState.copy(list = updatedList)
     }
 
-    fun updateBrightness(newValue: Float) {
-        brightness.floatValue = newValue
+    fun updateBrightness(activity: Activity, newValue: Float) {
+        Log.d("0099", "Updating brightness to $newValue")
+        val windowBrightness = newValue / 100.0f  // Convert 0-100 range to 0-1
+        adjustBrightness(activity, windowBrightness)
+        brightness.floatValue = newValue  // Update the state
+        savedStateHandle.set("brightness", newValue)  // Save the updated value
     }
 
     fun updateVolume(newValue: Float) {
