@@ -1,5 +1,7 @@
 package com.example.talkify.ui.main_screen.composable
 
+import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +16,8 @@ import com.example.talkify.R
 import com.example.talkify.ui.main_screen.viewmodel.MainScreenViewModel
 
 @Composable
-fun BottomSheetSettingsContent(viewModel: MainScreenViewModel) {
+fun BottomSheetContent(activity: Activity, viewModel: MainScreenViewModel) {
+    Log.d("0099", "Current brightness in BottomSheetContent is ${viewModel.brightness.value}")
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row{
             Image(
@@ -27,7 +30,7 @@ fun BottomSheetSettingsContent(viewModel: MainScreenViewModel) {
             SettingsSlider(
                 sliderValue = viewModel.brightness,
                 onValueChange = { newValue ->
-                   // viewModel.updateBrightness(activity, newValue)
+                    viewModel.updateBrightness(activity, newValue)
                 }
             )
         }
@@ -42,7 +45,7 @@ fun BottomSheetSettingsContent(viewModel: MainScreenViewModel) {
             SettingsSlider(
                 sliderValue = viewModel.volume,
                 onValueChange = { newValue ->
-                    viewModel.updateVolume(newValue) // Assuming updateVolume just needs a float
+                    viewModel.updateVolume(newValue)
                 }
             )
         }

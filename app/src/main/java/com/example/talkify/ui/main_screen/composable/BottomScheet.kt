@@ -31,8 +31,7 @@ fun BottomSheet(
     isSheetOpen: Boolean,
     onToggleSheet: () -> Unit
 ) {
-    //var openBottomSheet by remember { mutableStateOf(false) }
-    //val scope = rememberCoroutineScope()
+
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false
     )
